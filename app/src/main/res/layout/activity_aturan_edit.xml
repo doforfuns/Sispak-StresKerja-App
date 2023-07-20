@@ -61,7 +61,7 @@
             <ListView
                 android:id="@+id/lv_gejala"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="670dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1" />
 
