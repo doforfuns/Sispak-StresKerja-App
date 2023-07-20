@@ -1,0 +1,67 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Sistem Pakar Stres Kerja</string>
+    <string name="app_name_full">Sistem Pakar Diagnosa Stres Kerja Karyawan</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="belum_punya_akun">Belum punya akun?</string>
+    <string name="daftar">Daftar</string>
+    <string name="sudah_punya_akun">Sudah punya akun?</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="diagnosa_penyakit">Diagnosa Penyakit</string>
+    <string name="riwayat_diagnosa">Riwayat Diagnosa</string>
+    <string name="daftar_penyakit">Daftar Diagnosa</string>
+    <string name="daftar_pengguna">Data Pengguna</string>
+    <string name="getstarted">Ayo Cek Tingkat Stres Kamu</string>
+    <string name="view_password">Tampilkan Password</string>
+
+
+    <string name="metode_forward_chaining">Metode Forward Chaining</string>
+    <string name="metode_certainty_factor">Metode Certainty Factor</string>
+    <string name="diagnosa_cepat">Diagnosa Cepat</string>
+    <string name="diagnosa_akurat">Mulai Diagnosa </string>
+
+    <string name="data_penyakit">Data Diagnosa</string>
+    <string name="data_aturan">Data Aturan</string>
+    <string name="kode_gejala">Kode Gejala</string>
+    <string name="nama_gejala">Nama Gejala</string>
+    <string name="simpan">Simpan</string>
+    <string name="nilai_cf">Nilai CF</string>
+    <string name="hapus_gejala">Hapus Gejala</string>
+    <string name="kode_penyakit">Kode Diagnosa</string>
+    <string name="nama_penyakit">Nama Diagnosa :</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="solusi">Solusi</string>
+    <string name="gejala">Gejala :</string>
+    <string name="tidak_ada_gejala">Tidak ada gejala</string>
+    <string name="atur_ulang_gejala">Atur Ulang Gejala</string>
+    <string name="ya">Ya</string>
+    <string name="tidak">Tidak</string>
+    <string name="tidak_ada_riwayat_diagnosa">Tidak ada riwayat diagnosa</string>
+    <string name="text_hasil_diagnosa_nama_penyakit">Berdasarkan gejala terpilih, kemungkinan terkena penyakit</string>
+    <string name="forward_chaining">Forward Chaining</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="tidak_tahu">Tidak yakin</string>
+    <string name="sedikit_yakin">Sedikit yakin</string>
+    <string name="cukup_yakin">Cukup yakin</string>
+    <string name="id_pengguna">ID Pengguna</string>
+    <string name="yakin">Yakin</string>
+    <string name="sangat_yakin">Sangat yakin</string>
+    <string name="my_dashboard">Dashboard</string>
+    <string name="my_dashboard_user">User Dashboard</string>
+    <string name="my_dashboard_admin">Admin Dashboard</string>
+    <string name="menu_utama">Menu Utama</string>
+    <string name="hello_admin">Pengaturan Sistem Pakar</string>
+    <string name="data_gejala">Data Gejala</string>
+    <string name="aturan">Aturan</string>
+    <string name="certainly_factor">Certainly Factor</string>
+    <string name="selamat_datang_user">Yuk Cek Tingkat Stres Kamu Disini</string>
+    <string name="hasil_diagnosa">Hasil Diagnosa</string>
+    <string name="penyakit">Penyakit</string>
+
+    <string name="logout">Logout</string>
+    <string name="panduan_admin">Panduan Aplikasi</string>
+    <string name="informasi_user">Panduan User</string>
+    <string name="informasi_admin">Info Admin</string>
+    <string name="Dashboard">Kembali ke Dashboard</string>
+</resources>

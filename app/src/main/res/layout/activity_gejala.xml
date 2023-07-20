@@ -1,0 +1,48 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bbackground">
+
+    <View
+        android:id="@id/view"
+        android:layout_width="match_parent"
+        android:layout_height="233dp"
+        android:background="@drawable/bg_purple" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_layout_white"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <ListView
+                android:id="@+id/list_gejala"
+                android:layout_width="match_parent"
+                android:layout_height="800dp"
+                android:divider="@color/black"
+                android:dividerHeight="0.5dp"
+                android:fontFamily="@font/mmedium" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_add" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sistempakarstreskerja">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/icon"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SistemPakarKulitWajah"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.sistempakarstreskerja.DiagnosaCfHasilActivity"
+            android:theme="@style/DiagnosaCfHasilTheme"
+            android:parentActivityName="com.sistempakarstreskerja.DiagnosaCfActivity"></activity>
+        <activity
+            android:name="com.sistempakarstreskerja.DiagnosaForwardHasilActivity"
+            android:theme="@style/DiagnosaForwardHasilTheme"
+            android:parentActivityName="com.sistempakarstreskerja.DiagnosaForwardActivity" />
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PanduanAdminActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.PanduanAdminActivity" android:theme="@style/PanduanAdminTheme"
+            />
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.AturanViewActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.AturanActivity" />
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.AturanEditActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.AturanViewActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PenyakitEditActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.PenyakitActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PenyakitTambahActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.PenyakitActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.GejalaTambahActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.GejalaActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.GejalaEditActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.GejalaActivity" />
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PenggunaEditActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.PenggunaActivity" />
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PenggunaTambahActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.PenggunaActivity" />
+
+
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PanduanUserActivity"
+            android:parentActivityName="com.sistempakarstreskerja.admin.PanduanUserActivity" android:theme="@style/PanduanUserTheme"
+            />
+
+        <activity
+            android:name="com.sistempakarstreskerja.admin.AturanActivity"
+            android:parentActivityName="com.sistempakarstreskerja.AdminActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PenyakitActivity"
+            android:parentActivityName="com.sistempakarstreskerja.AdminActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.GejalaActivity"
+            android:parentActivityName="com.sistempakarstreskerja.AdminActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.admin.PenggunaActivity"
+            android:parentActivityName="com.sistempakarstreskerja.AdminActivity" />
+        <activity android:name="com.sistempakarstreskerja.AdminActivity" android:theme="@style/AdminTheme" />
+
+        <activity
+            android:name="com.sistempakarstreskerja.PenyakitDetailActivity"
+            android:parentActivityName="com.sistempakarstreskerja.PenyakitActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.PenyakitActivity"
+            android:parentActivityName="com.sistempakarstreskerja.MainActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.RiwayatActivity"
+            android:parentActivityName="com.sistempakarstreskerja.MainActivity" />
+        <activity
+            android:name="com.sistempakarstreskerja.DiagnosaCfActivity"
+            android:parentActivityName="com.sistempakarstreskerja.MainActivity" />
+
+        <activity
+            android:name="com.sistempakarstreskerja.DiagnosaForwardActivity"
+            android:parentActivityName="com.sistempakarstreskerja.MainActivity" />
+        <activity android:name="com.sistempakarstreskerja.DaftarActivity" android:theme="@style/DaftarTheme" />
+        <activity android:name="com.sistempakarstreskerja.LoginActivity"  android:theme="@style/LoginTheme" />
+        <activity android:name="com.sistempakarstreskerja.MainActivity" android:theme="@style/MainTheme" />
+        <activity
+            android:name="com.sistempakarstreskerja.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+    </application>
+
+</manifest>
