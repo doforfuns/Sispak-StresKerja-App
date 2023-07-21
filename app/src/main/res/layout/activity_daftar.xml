@@ -11,7 +11,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="310dp"
-        android:background="@drawable/bg_gradient_primary_blue"
+        android:background="@drawable/bg_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

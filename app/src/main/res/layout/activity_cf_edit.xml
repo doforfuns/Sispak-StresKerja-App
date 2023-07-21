@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bbackground">
+
+    <View
+        android:id="@id/view"
+        android:layout_width="match_parent"
+        android:layout_height="233dp"
+        android:background="@drawable/bg_purple" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_layout_white"
+            android:orientation="vertical"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/mlight"
+                    android:text="Nama Diagnosa"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="20sp" />
+
+
+                <EditText
+                    android:id="@+id/tv_nama_penyakit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_view_circle_picture"
+                    android:fontFamily="@font/mmedium"
+                    android:lines="1"
+                    android:paddingLeft="12dp"
+                    android:hint="Nama DIagnosa"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/blackPrimary"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false" />
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Edit Penyakit:"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="bold" />-->
+<!--            -->
+<!--                <EditText-->
+<!--                    android:id="@+id/tv_nama_penyakit"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter Nama Penyakit"-->
+<!--                    android:inputType="text" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/mlight"
+                    android:text="Nama Gejala"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/tv_nama_gejala"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/bg_view_circle_picture"
+                    android:fontFamily="@font/mmedium"
+                    android:gravity="center|start"
+                    android:hint="@string/nama_gejala"
+                    android:inputType="textMultiLine"
+                    android:lines="8"
+                    android:maxLines="10"
+                    android:minLines="6"
+                    android:padding="10dp"
+                    android:paddingLeft="12dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/blackPrimary"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"/>
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Edit Gejala:"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_marginTop="16dp" />-->
+<!--            -->
+<!--                <EditText-->
+<!--                    android:id="@+id/tv_nama_gejala"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter Gejala"-->
+<!--                    android:inputType="text" />-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:fontFamily="@font/mlight"
+                    android:text="Nilai CF Pakar"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="20sp" />
+
+
+                <EditText
+                    android:id="@+id/edit_nilai_cf"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_input_edit"
+                    android:fontFamily="@font/mmedium"
+                    android:lines="1"
+                    android:paddingLeft="12dp"
+                    android:hint="Nilai CF Pakar"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/blackPrimary" />
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Edit Nilai CF:"-->
+<!--                    android:textSize="16sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_marginTop="16dp" />-->
+<!--            -->
+<!--                <EditText-->
+<!--                    android:id="@+id/edit_nilai_cf"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Enter Nilai CF"-->
+<!--                    android:inputType="numberDecimal" />-->
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/bg_btn_blue_primary"
+                android:fontFamily="@font/mmedium"
+                android:text="@string/simpan"
+                android:textColor="#FFF"
+                android:textSize="20sp"
+                app:backgroundTint="@color/bluePrimary" />
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_save"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Save Changes"-->
+<!--                android:layout_marginTop="16dp" />-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

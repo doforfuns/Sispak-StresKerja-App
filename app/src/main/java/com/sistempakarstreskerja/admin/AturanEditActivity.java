@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
-import com.android.volley.request.JsonObjectRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.sistempakarstreskerja.MySingleton;
 import com.sistempakarstreskerja.R;
 

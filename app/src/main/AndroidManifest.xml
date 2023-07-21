@@ -13,6 +13,9 @@
         android:theme="@style/Theme.SistemPakarKulitWajah"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".admin.CFEditActivity"
+            android:label="CF Edit Activity" />
+        <activity
             android:name="com.sistempakarstreskerja.DiagnosaCfHasilActivity"
             android:theme="@style/DiagnosaCfHasilTheme"
             android:parentActivityName="com.sistempakarstreskerja.DiagnosaCfActivity"></activity>
