@@ -50,6 +50,16 @@ public class AturanAdapter extends RecyclerView.Adapter<AturanAdapter.ViewHolder
         return aturanList.size();
     }
 
+    public void clearData() {
+        aturanList.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAllData(ArrayList<HashMap<String, String>> newData) {
+        aturanList.addAll(newData);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_id, tv_nama_penyakit, tv_daftar_gejala;
 

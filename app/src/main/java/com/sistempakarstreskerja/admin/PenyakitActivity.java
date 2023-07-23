@@ -18,9 +18,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sistempakarstreskerja.MySingleton;
 import com.sistempakarstreskerja.R;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,13 +27,13 @@ import java.util.HashMap;
 
 public class PenyakitActivity extends AppCompatActivity {
 
-    private ProgressDialog pDialog;
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_penyakit.php";
     private RecyclerView recyclerView;
     private PenyakitAdapter adapter;
 
     private static final int REQUEST_ADD_PENYAKIT = 1;
     private static final int REQUEST_EDIT_PENYAKIT = 2;
+    private boolean isDataLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,34 +50,36 @@ public class PenyakitActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_ADD_PENYAKIT);
         });
 
-        // Register EventBus
-        EventBus.getDefault().register(this);
-
         // Load data when first opening the activity
         loadData();
     }
 
-    public class DataRefreshEvent {
-        // Tambahkan atribut atau data yang dibutuhkan (jika ada)
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refresh data when returning from other activities
+        loadData();
     }
 
     @Override
-    protected void onDestroy() {
-        // Unregister EventBus to avoid memory leaks
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
-
-    private void displayLoader() {
-        pDialog = new ProgressDialog(PenyakitActivity.this);
-        pDialog.setMessage("Sedang diproses...");
-        pDialog.setIndeterminate(false);
-        pDialog.setCancelable(false);
-        pDialog.show();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ADD_PENYAKIT || requestCode == REQUEST_EDIT_PENYAKIT) {
+            if (resultCode == RESULT_OK) {
+                // Refresh data if data is added or edited successfully
+                loadData();
+            }
+        }
     }
 
     private void loadData() {
-        displayLoader();
+        // Show progress dialog while loading data
+        ProgressDialog pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Sedang memuat data...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         JsonObjectRequest jsArrayRequest = new JsonObjectRequest
                 (Request.Method.POST, url, null, response -> {
                     pDialog.dismiss();
@@ -118,6 +117,12 @@ public class PenyakitActivity extends AppCompatActivity {
                                 // Add DividerItemDecoration to show dividers between items
                                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
                                 recyclerView.addItemDecoration(dividerItemDecoration);
+
+                                // Notify adapter that data has changed
+                                adapter.notifyDataSetChanged();
+
+                                // Set isDataLoaded to true after successful data loading
+                                isDataLoaded = true;
                             }
                         } else {
                             Toast.makeText(getApplicationContext(),
@@ -129,28 +134,10 @@ public class PenyakitActivity extends AppCompatActivity {
                 }, error -> {
                     pDialog.dismiss();
                     Toast.makeText(getApplicationContext(),
-                            error.getMessage(), Toast.LENGTH_SHORT).show();
+                            "Error loading data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_ADD_PENYAKIT && resultCode == RESULT_OK) {
-            // Refresh data if data is added successfully
-            loadData();
-        } else if (requestCode == REQUEST_EDIT_PENYAKIT && resultCode == RESULT_OK) {
-            // Refresh data if data is edited successfully
-            loadData();
-        }
-    }
-
-    // Method to handle the data refresh event from EventBus
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDataRefreshEvent(DataRefreshEvent event) {
-        loadData();
     }
 
     @Override
@@ -161,5 +148,7 @@ public class PenyakitActivity extends AppCompatActivity {
         }
         return false;
     }
-}
 
+    // ... (Other methods)
+
+}

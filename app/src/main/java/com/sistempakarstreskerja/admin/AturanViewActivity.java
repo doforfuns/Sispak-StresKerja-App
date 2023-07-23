@@ -1,22 +1,16 @@
 package com.sistempakarstreskerja.admin;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -34,16 +28,16 @@ public class AturanViewActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private static final String url = "https://streskerja.000webhostapp.com/get_aturan.php";
     private TextView tv_nama_penyakit;
-    private ListView listDaftarGejala;
     private String id_penyakit;
     private String nama_penyakit = "";
 
-
     private ArrayList<String> symptomsList = new ArrayList<>();
     private ArrayList<String> nilaiCfList = new ArrayList<>();
-    private static ArrayList<String> id_aturanList = new ArrayList<>();
+    private ArrayList<String> id_aturanList = new ArrayList<>();
 
     private static final int EDIT_REQUEST_CODE = 1;
+
+    private AturanViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,32 +51,24 @@ public class AturanViewActivity extends AppCompatActivity {
         }
 
         tv_nama_penyakit = findViewById(R.id.tv_nama_penyakit);
-        listDaftarGejala = findViewById(R.id.list_daftar_gejala);
 
         Button btn_atur_ulang = findViewById(R.id.btn_atur_ulang);
-
         btn_atur_ulang.setOnClickListener(view -> {
             Intent intent = new Intent(AturanViewActivity.this, AturanEditActivity.class);
             intent.putExtra("id_penyakit", id_penyakit);
             intent.putExtra("nama_penyakit", nama_penyakit);
-            startActivity(intent);
-        });
-
-        // Set item click listener for the ListView
-        listDaftarGejala.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedGejala = symptomsList.get(position);
-            String selectedNilaiCf = nilaiCfList.get(position);
-            String selectedid_aturan = id_aturanList.get(position);
-
-            Intent intent = new Intent(AturanViewActivity.this, CFEditActivity.class);
-            intent.putExtra("selected_penyakit", tv_nama_penyakit.getText().toString());
-            intent.putExtra("selected_gejala", selectedGejala);
-            intent.putExtra("selected_nilai_cf", selectedNilaiCf);
-            intent.putExtra("selected_id_aturan", selectedid_aturan);
-            intent.putExtra("position", position);
             startActivityForResult(intent, EDIT_REQUEST_CODE);
         });
 
+        RecyclerView recyclerDaftarGejala = findViewById(R.id.recycler_daftar_gejala);
+        recyclerDaftarGejala.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new AturanViewAdapter(symptomsList, nilaiCfList, id_aturanList);
+        adapter.setOnItemClickListener((selectedGejala, selectedNilaiCf, selectedIdAturan, position) -> {
+            handleItemClick(selectedGejala, selectedNilaiCf, selectedIdAturan, position);
+        });
+
+        recyclerDaftarGejala.setAdapter(adapter);
     }
 
     @Override
@@ -132,8 +118,8 @@ public class AturanViewActivity extends AppCompatActivity {
                                 id_aturanList.add(id_aturanArray.getString(i));
                             }
 
-                            CustomListAdapter adapter = new CustomListAdapter(this, symptomsList, nilaiCfList, id_aturanList);
-                            listDaftarGejala.setAdapter(adapter);
+                            // Notify the adapter of data changes
+                            adapter.notifyDataSetChanged();
 
                             nama_penyakit = response.getString("nama_penyakit");
                         } else {
@@ -160,73 +146,13 @@ public class AturanViewActivity extends AppCompatActivity {
         pDialog.show();
     }
 
-    private static class CustomListAdapter extends ArrayAdapter<String> {
-
-        private Context context;
-        private ArrayList<String> symptomsList;
-        private ArrayList<String> nilaiCfList;
-        private ArrayList<String> idAturanList;
-        private AturanViewActivity aturanViewActivity;
-
-        public CustomListAdapter(AturanViewActivity activity, ArrayList<String> symptomsList, ArrayList<String> nilaiCfList, ArrayList<String> idAturanList) {
-            super(activity, R.layout.list_gejala_cf, symptomsList);
-            this.context = activity;
-            this.symptomsList = symptomsList;
-            this.nilaiCfList = nilaiCfList;
-            this.idAturanList = idAturanList;
-            this.aturanViewActivity = activity;
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View listItemView = convertView;
-            if (listItemView == null) {
-                listItemView = LayoutInflater.from(context).inflate(R.layout.list_gejala_cf, parent, false);
-            }
-
-            TextView tvListItem = listItemView.findViewById(R.id.tv_list_gejala);
-            TextView tvNilaiCf = listItemView.findViewById(R.id.tv_nilai_cf);
-            TextView tvid_aturan = listItemView.findViewById(R.id.tv_id_aturan);
-
-            String symptom = symptomsList.get(position);
-            tvListItem.setText(symptom);
-
-            String nilaiCf = nilaiCfList.get(position);
-            tvNilaiCf.setText("Nilai CF : " + nilaiCf);
-
-            String id_aturan = id_aturanList.get(position);
-            tvid_aturan.setText("ID : " + id_aturan);
-
-            return listItemView;
-        }
+    private void handleItemClick(String selectedGejala, String selectedNilaiCf, String selectedIdAturan, int position) {
+        Intent intent = new Intent(AturanViewActivity.this, CFEditActivity.class);
+        intent.putExtra("selected_penyakit", nama_penyakit); // Use the 'nama_penyakit' variable
+        intent.putExtra("selected_gejala", selectedGejala);
+        intent.putExtra("selected_nilai_cf", selectedNilaiCf);
+        intent.putExtra("selected_id_aturan", selectedIdAturan);
+        intent.putExtra("position", position);
+        startActivityForResult(intent, EDIT_REQUEST_CODE);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == EDIT_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
-            int deletedPosition = data.getIntExtra("deleted_position", -1);
-            int updatedPosition = data.getIntExtra("updated_position", -1);
-
-            if (deletedPosition != -1) {
-                // Refresh the list view after successful deletion
-                symptomsList.remove(deletedPosition);
-                nilaiCfList.remove(deletedPosition);
-                id_aturanList.remove(deletedPosition);
-                ((CustomListAdapter) listDaftarGejala.getAdapter()).notifyDataSetChanged();
-            } else if (updatedPosition != -1) {
-                // Refresh the list view after successful update
-                String editedGejala = data.getStringExtra("edited_gejala");
-                String editedNilaiCf = data.getStringExtra("edited_nilai_cf");
-
-                symptomsList.set(updatedPosition, editedGejala);
-                nilaiCfList.set(updatedPosition, editedNilaiCf);
-
-                ((CustomListAdapter) listDaftarGejala.getAdapter()).notifyDataSetChanged();
-            }
-        }
-    }
-
 }

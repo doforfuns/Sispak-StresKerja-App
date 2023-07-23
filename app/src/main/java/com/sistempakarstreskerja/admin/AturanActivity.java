@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,8 +31,8 @@ public class AturanActivity extends AppCompatActivity {
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_aturan.php";
     private RecyclerView recyclerView;
     private AturanAdapter adapter;
+    private static final int VIEW_REQUEST_CODE = 1;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aturan);
@@ -42,7 +40,12 @@ public class AturanActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Panggil metode getData() saat aktivitas dijalankan atau dilanjutkan dari aktivitas lain
         getData();
     }
 
@@ -78,25 +81,25 @@ public class AturanActivity extends AppCompatActivity {
                                 Toast.makeText(AturanActivity.this, "Tidak ada data aturan",
                                         Toast.LENGTH_SHORT).show();
                             } else {
-                                adapter = new AturanAdapter(list, AturanActivity.this);
-
-                                // Set item click listener for the adapter
-                                adapter.setOnItemClickListener(new AturanAdapter.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, int position) {
+                                if (adapter == null) {
+                                    adapter = new AturanAdapter(list, AturanActivity.this);
+                                    recyclerView.setAdapter(adapter);
+                                    // Set item click listener for the adapter
+                                    adapter.setOnItemClickListener((view, position) -> {
                                         HashMap<String, String> aturan = list.get(position);
                                         String idPenyakit = aturan.get("id_penyakit");
                                         Intent intent = new Intent(AturanActivity.this, AturanViewActivity.class);
                                         intent.putExtra("id_penyakit", idPenyakit);
-                                        startActivity(intent);
-                                    }
-                                });
+                                        startActivityForResult(intent, VIEW_REQUEST_CODE);
+                                    });
 
-                                recyclerView.setAdapter(adapter);
-
-                                // Add DividerItemDecoration to show dividers between items
-                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-                                recyclerView.addItemDecoration(dividerItemDecoration);
+                                    // Add DividerItemDecoration to show dividers between items
+                                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+                                    recyclerView.addItemDecoration(dividerItemDecoration);
+                                } else {
+                                    adapter.clearData();
+                                    adapter.addAllData(list);
+                                }
                             }
                         } else {
                             Toast.makeText(getApplicationContext(),
@@ -115,11 +118,11 @@ public class AturanActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VIEW_REQUEST_CODE && resultCode == RESULT_OK) {
+            // If the result is OK, reload the data
+            getData();
         }
-        return false;
     }
 }
