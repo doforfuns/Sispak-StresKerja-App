@@ -11,9 +11,23 @@
         android:layout_height="233dp"
         android:background="@drawable/bg_purple" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_btn_blue_primary"
+        android:fontFamily="@font/mmedium"
+        android:id="@+id/btn_atur_ulang"
+        android:layout_gravity="bottom"
+        android:layout_margin="30dp"
+        android:text="@string/atur_ulang_gejala"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:backgroundTint="@color/greenPrimary"
+        android:layout_height="55dp"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -30,59 +44,54 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/nama_penyakit"
-            android:fontFamily="@font/mregular"
-            android:textColor="@color/black"
-            android:textAppearance="?android:textAppearanceMedium"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/nama_penyakit"
+                android:fontFamily="@font/mregular"
+                android:textColor="@color/black"
+                android:textAppearance="?android:textAppearanceMedium"/>
 
-        <TextView
-            android:id="@+id/tv_nama_penyakit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/nama_penyakit"
-            android:textColor="@android:color/black"
-            android:fontFamily="@font/mmedium"
-            android:textAppearance="?android:textAppearanceMedium"/>
+            <TextView
+                android:id="@+id/tv_nama_penyakit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/nama_penyakit"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/mmedium"
+                android:textAppearance="?android:textAppearanceMedium"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="@string/gejala"
-            android:fontFamily="@font/mregular"
-            android:textColor="@color/black"
-            android:textAppearance="?android:textAppearanceMedium"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/gejala"
+                android:fontFamily="@font/mregular"
+                android:textColor="@color/black"
+                android:textAppearance="?android:textAppearanceMedium"/>
 
-        <ListView
-            android:id="@+id/list_daftar_gejala"
-            android:layout_width="match_parent"
-            android:layout_height="673dp"
-            android:layout_marginTop="5dp"
-            android:divider="@color/black"
-            android:fontFamily="@font/mmedium"
-            android:dividerHeight="0.5dp" />
+            <!--        <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/list_daftar_gejala"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="680dp"-->
+            <!--                android:layout_marginTop="5dp"-->
+            <!--                android:divider="@color/black"-->
+            <!--                android:fontFamily="@font/mmedium"-->
+            <!--                android:dividerHeight="0.5dp" />-->
 
+            <ListView
+                android:id="@+id/list_daftar_gejala"
+                android:background="@color/graySecondary"
+                android:layout_width="match_parent"
+                android:layout_height="680dp"
+                android:layout_marginTop="5dp"
+                android:divider="@color/black"
+                android:fontFamily="@font/mmedium"
+                android:dividerHeight="0.5dp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:background="@drawable/bg_btn_blue_primary"
-            android:fontFamily="@font/mmedium"
-            android:id="@+id/btn_atur_ulang"
-            android:layout_margin="20dp"
-            android:text="@string/atur_ulang_gejala"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:backgroundTint="@color/bluePrimary"
-            android:layout_height="55dp"
-
-            />
-
-    </LinearLayout>
+        </LinearLayout>
 
     </ScrollView>
 

@@ -9,12 +9,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
 
 import com.sistempakarstreskerja.R;
 
 import java.util.ArrayList;
 
-public class MyCustomAdapter extends ArrayAdapter<Gejala> {
+public class AturanEditAdapter extends ArrayAdapter<Gejala> {
 
     private ArrayList<Gejala> gejalaList;
 
@@ -28,18 +29,13 @@ public class MyCustomAdapter extends ArrayAdapter<Gejala> {
             toastShown = true; // Set the flag to true to prevent showing the Toast again
         }
     }
-    public MyCustomAdapter(Context context, int textViewResourceId,
-                           ArrayList<Gejala> gejalaList) {
+
+    public AturanEditAdapter(Context context, int textViewResourceId,
+                             ArrayList<Gejala> gejalaList) {
         super(context, textViewResourceId, gejalaList);
         this.gejalaList = new ArrayList<>();
         this.gejalaList.addAll(gejalaList);
 
-        // Set nilai default untuk nilai CF ketika objek Gejala baru ditambahkan
-        for (Gejala gejala : this.gejalaList) {
-            if (gejala.getNilaiCf() == 0.0) {
-                gejala.setNilaiCf(0.0);
-            }
-        }
     }
 
     private static class ViewHolder {
@@ -51,13 +47,18 @@ public class MyCustomAdapter extends ArrayAdapter<Gejala> {
         return gejalaList;
     }
 
-    public boolean hasEmptyCF() {
+    // In AturanEditAdapter class
+    public boolean hasEmptyOrInvalidCF() {
         for (Gejala gejala : gejalaList) {
-            if (gejala.isSelected() && gejala.getNilaiCf() == 0.0) {
-                return true;
+            if (gejala.isSelected()) {
+                double cfValue = gejala.getNilaiCf();
+                // Check if the CF value is empty or not within the valid range (0.1 to 1.0)
+                if (cfValue == 0.0 || cfValue < 0.1 || cfValue > 1.0) {
+                    return true; // There is at least one selected symptom with an empty or invalid CF value
+                }
             }
         }
-        return false;
+        return false; // All selected symptoms have valid CF values
     }
 
 
@@ -80,44 +81,41 @@ public class MyCustomAdapter extends ArrayAdapter<Gejala> {
                 gejala.setSelected(cb.isChecked());
                 if (cb.isChecked()) {
                     holder.et_certainty_factor.setVisibility(View.VISIBLE);
+                    holder.et_certainty_factor.requestFocus(); // Set fokus ke EditText nilai CF
+                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(holder.et_certainty_factor, InputMethodManager.SHOW_IMPLICIT); // Tampilkan keyboard
                 } else {
                     holder.et_certainty_factor.setVisibility(View.GONE);
-                    // Reset the value to 0.0 when hiding the EditText
-                    gejala.setNilaiCf(0.0);
-                    holder.et_certainty_factor.setText(""); // Clear the EditText text
+                    // Clear the nilai_cf when hiding the EditText
+                    holder.et_certainty_factor.setText("");
                 }
 
                 // Check if this is the first gejala being selected
                 if (!toastShown && cb.isChecked()) {
-                    showToastOnce(getContext(), "Harap masukkan nilai CF yang valid!");
+                    showToastOnce(getContext(), "Harap masukkan nilai CF Pakar yang valid!");
                     toastShown = true; // Set the flag to true to prevent showing the Toast again
                 }
             });
+
 
             holder.et_certainty_factor.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
                     EditText et_cf = (EditText) v;
                     String cfValueStr = et_cf.getText().toString();
-                    if (!cfValueStr.isEmpty()) { // Check if the EditText is not empty
+                    if (!cfValueStr.isEmpty()) {
                         double cfValue = 0.0;
                         try {
                             cfValue = Double.parseDouble(cfValueStr);
+                            Gejala gejala = (Gejala) holder.name.getTag();
+                            gejala.setNilaiCf(cfValue);
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
+                            // Show an error message or handle the invalid input accordingly
+                            // For example, you can display a Toast message
+                            showToastOnce(getContext(), "Masukkan nilai CF Pakar yang valid!");
                         }
-                        Gejala gejala = (Gejala) holder.name.getTag();
-                        gejala.setNilaiCf(cfValue);
                     } else {
-                        // Show an error message or handle the empty input accordingly
-                        // For example, you can display a Toast message
-                        if (!toastShown) {
-                            Toast toast = Toast.makeText(getContext(), "Harap masukkan nilai CF yang valid!", Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, 0); // Set gravity to center
-                            toast.show();
-                            toastShown = true; // Set the flag to true so that the toast won't be shown again
-                        }
-                        // If you want to reset the value to 0.0 when EditText is empty, uncomment the line below
-                        // gejala.setNilaiCf(0.0);
+                        // If the EditText is empty, do not change the nilai_cf
                     }
                 }
             });
@@ -134,12 +132,13 @@ public class MyCustomAdapter extends ArrayAdapter<Gejala> {
         // Set the visibility and value of EditText based on the isSelected() state
         if (gejala.isSelected()) {
             holder.et_certainty_factor.setVisibility(View.VISIBLE);
-            holder.et_certainty_factor.setText(String.valueOf(gejala.getNilaiCf()));
+            // Set the EditText value to the existing CF value if available
+            // Otherwise, set it to an empty string
+            holder.et_certainty_factor.setText(gejala.getNilaiCf() != 0.0 ? String.valueOf(gejala.getNilaiCf()) : "");
         } else {
             holder.et_certainty_factor.setVisibility(View.GONE);
-            // Reset the value to 0.0 when hiding the EditText
-            gejala.setNilaiCf(0.0);
-            holder.et_certainty_factor.setText(""); // Clear the EditText text
+            // Clear the EditText text when hiding the EditText for non-selected Gejala
+            holder.et_certainty_factor.setText("");
         }
 
         return convertView;

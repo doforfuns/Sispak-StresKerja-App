@@ -11,6 +11,15 @@
         android:layout_height="233dp"
         android:background="@drawable/bg_purple" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_simpan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="30dp"
+        android:src="@drawable/ic_add"
+        app:layout_anchor="@id/lv_gejala" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,7 +27,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="832dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
@@ -60,22 +69,23 @@
 
             <ListView
                 android:id="@+id/lv_gejala"
+                android:background="@color/graySecondary"
                 android:layout_width="match_parent"
-                android:layout_height="670dp"
+                android:layout_height="500dp"
                 android:layout_margin="5dp"
                 android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/btn_simpan"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/bg_btn_blue_primary"
-                android:fontFamily="@font/mmedium"
-                android:text="@string/simpan"
-                android:textColor="@color/white"
-                android:textSize="19sp"
-                app:backgroundTint="@color/bluePrimary" />
+<!--            <Button-->
+<!--                android:id="@+id/btn_simpan"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="55dp"-->
+<!--                android:layout_margin="20dp"-->
+<!--                android:background="@drawable/bg_btn_blue_primary"-->
+<!--                android:fontFamily="@font/mmedium"-->
+<!--                android:text="@string/simpan"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textSize="19sp"-->
+<!--                app:backgroundTint="@color/bluePrimary" />-->
 
         </LinearLayout>
 

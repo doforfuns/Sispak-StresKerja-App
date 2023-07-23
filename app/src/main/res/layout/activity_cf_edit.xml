@@ -56,7 +56,7 @@
                     android:fontFamily="@font/mmedium"
                     android:lines="1"
                     android:paddingLeft="12dp"
-                    android:hint="Nama DIagnosa"
+                    android:hint="@string/penyakit_nama"
                     android:inputType="textPersonName"
                     android:textColor="@color/blackPrimary"
                     android:focusable="false"
@@ -157,8 +157,8 @@
                     android:fontFamily="@font/mmedium"
                     android:lines="1"
                     android:paddingLeft="12dp"
-                    android:hint="Nilai CF Pakar"
-                    android:inputType="textPersonName"
+                    android:hint="@string/nilai_cf"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/blackPrimary" />
 
 <!--                <TextView-->

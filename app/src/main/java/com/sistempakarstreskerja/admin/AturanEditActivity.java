@@ -5,11 +5,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.TextView;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.view.inputmethod.InputMethodManager;
+import android.content.Context;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +31,7 @@ public class AturanEditActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_gejala.php";
     private static final String url_update = "https://streskerja.000webhostapp.com/update_aturan.php";
-    private MyCustomAdapter dataAdapter = null;
+    private AturanEditAdapter dataAdapter = null;
     private ArrayList<Gejala> gejalaList = new ArrayList<Gejala>();
     private Gejala gejala;
     private String id_penyakit;
@@ -53,8 +55,8 @@ public class AturanEditActivity extends AppCompatActivity {
 
         getDaftarGejala();
 
-        Button btn_simpan = findViewById(R.id.btn_simpan);
-        btn_simpan.setOnClickListener(v -> {
+        FloatingActionButton fabSimpan = findViewById(R.id.btn_simpan);
+        fabSimpan.setOnClickListener(v -> {
             responseText = new StringBuffer();
             ArrayList<Double> cfValues = new ArrayList<>(); // List untuk menyimpan nilai_cf
 
@@ -70,13 +72,20 @@ public class AturanEditActivity extends AppCompatActivity {
                 }
             }
 
-            if (dataAdapter.hasEmptyCF()) {
+            if (dataAdapter.hasEmptyOrInvalidCF()) {
                 showCFEmptyWarning(); // Show the warning dialog
-            } else {
+            } else
+            {
                 updateAturan(responseText.toString(), cfValues); // Kirim nilai_cf ke method updateAturan()
             }
-        });
 
+            // Sembunyikan keyboard setelah menekan tombol simpan
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            View focusedView = getCurrentFocus();
+            if (focusedView != null) {
+                imm.hideSoftInputFromWindow(focusedView.getWindowToken(), 0);
+            }
+        });
     }
 
     private void getDaftarGejala() {
@@ -94,7 +103,7 @@ public class AturanEditActivity extends AppCompatActivity {
                                 gejala = new Gejala(name, false);
                                 gejalaList.add(gejala);
                             }
-                            dataAdapter = new MyCustomAdapter(AturanEditActivity.this, R.layout.gejala_list_ceklis, gejalaList);
+                            dataAdapter = new AturanEditAdapter(AturanEditActivity.this, R.layout.gejala_list_ceklis, gejalaList);
                             ListView listView = findViewById(R.id.lv_gejala);
                             listView.setAdapter(dataAdapter);
                         } else {
@@ -168,7 +177,7 @@ public class AturanEditActivity extends AppCompatActivity {
     private void showCFEmptyWarning() {
         AlertDialog.Builder builder = new AlertDialog.Builder(AturanEditActivity.this);
         builder.setTitle("Peringatan!");
-        builder.setMessage("Ada gejala yang nilai CF-nya kosong, pastikan semua gejala terpilih memiliki nilai CF.");
+        builder.setMessage("Ada gejala yang nilai CF-nya tidak valid atau kosong, pastikan semua gejala terpilih memiliki nilai CF yang valid!");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

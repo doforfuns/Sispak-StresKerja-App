@@ -18,11 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.VolleyError;
 import com.sistempakarstreskerja.MySingleton;
 import com.sistempakarstreskerja.R;
 
@@ -41,8 +38,10 @@ public class AturanViewActivity extends AppCompatActivity {
     private String id_penyakit;
     private String nama_penyakit = "";
 
+
     private ArrayList<String> symptomsList = new ArrayList<>();
     private ArrayList<String> nilaiCfList = new ArrayList<>();
+    private static ArrayList<String> id_aturanList = new ArrayList<>();
 
     private static final int EDIT_REQUEST_CODE = 1;
 
@@ -73,14 +72,17 @@ public class AturanViewActivity extends AppCompatActivity {
         listDaftarGejala.setOnItemClickListener((parent, view, position, id) -> {
             String selectedGejala = symptomsList.get(position);
             String selectedNilaiCf = nilaiCfList.get(position);
+            String selectedid_aturan = id_aturanList.get(position);
 
             Intent intent = new Intent(AturanViewActivity.this, CFEditActivity.class);
-            intent.putExtra("selected_penyakit", tv_nama_penyakit.getText().toString()); // Send the selected penyakit name
+            intent.putExtra("selected_penyakit", tv_nama_penyakit.getText().toString());
             intent.putExtra("selected_gejala", selectedGejala);
             intent.putExtra("selected_nilai_cf", selectedNilaiCf);
+            intent.putExtra("selected_id_aturan", selectedid_aturan);
             intent.putExtra("position", position);
             startActivityForResult(intent, EDIT_REQUEST_CODE);
         });
+
     }
 
     @Override
@@ -118,16 +120,19 @@ public class AturanViewActivity extends AppCompatActivity {
 
                             JSONArray symptomsArray = response.getJSONArray("daftar_gejala");
                             JSONArray nilaiCfArray = response.getJSONArray("nilai_cf");
+                            JSONArray id_aturanArray = response.getJSONArray("id_aturan");
 
                             symptomsList.clear();
                             nilaiCfList.clear();
+                            id_aturanList.clear();
 
                             for (int i = 0; i < symptomsArray.length(); i++) {
                                 symptomsList.add(symptomsArray.getString(i));
                                 nilaiCfList.add(nilaiCfArray.getString(i));
+                                id_aturanList.add(id_aturanArray.getString(i));
                             }
 
-                            CustomListAdapter adapter = new CustomListAdapter(this, symptomsList, nilaiCfList);
+                            CustomListAdapter adapter = new CustomListAdapter(this, symptomsList, nilaiCfList, id_aturanList);
                             listDaftarGejala.setAdapter(adapter);
 
                             nama_penyakit = response.getString("nama_penyakit");
@@ -160,12 +165,16 @@ public class AturanViewActivity extends AppCompatActivity {
         private Context context;
         private ArrayList<String> symptomsList;
         private ArrayList<String> nilaiCfList;
+        private ArrayList<String> idAturanList;
+        private AturanViewActivity aturanViewActivity;
 
-        public CustomListAdapter(Context context, ArrayList<String> symptomsList, ArrayList<String> nilaiCfList) {
-            super(context, R.layout.list_gejala_cf, symptomsList);
-            this.context = context;
+        public CustomListAdapter(AturanViewActivity activity, ArrayList<String> symptomsList, ArrayList<String> nilaiCfList, ArrayList<String> idAturanList) {
+            super(activity, R.layout.list_gejala_cf, symptomsList);
+            this.context = activity;
             this.symptomsList = symptomsList;
             this.nilaiCfList = nilaiCfList;
+            this.idAturanList = idAturanList;
+            this.aturanViewActivity = activity;
         }
 
         @NonNull
@@ -178,6 +187,7 @@ public class AturanViewActivity extends AppCompatActivity {
 
             TextView tvListItem = listItemView.findViewById(R.id.tv_list_gejala);
             TextView tvNilaiCf = listItemView.findViewById(R.id.tv_nilai_cf);
+            TextView tvid_aturan = listItemView.findViewById(R.id.tv_id_aturan);
 
             String symptom = symptomsList.get(position);
             tvListItem.setText(symptom);
@@ -185,77 +195,38 @@ public class AturanViewActivity extends AppCompatActivity {
             String nilaiCf = nilaiCfList.get(position);
             tvNilaiCf.setText("Nilai CF : " + nilaiCf);
 
+            String id_aturan = id_aturanList.get(position);
+            tvid_aturan.setText("ID : " + id_aturan);
+
             return listItemView;
         }
-    }
-
-    private void updateNilaiCfInDatabase(String aturanId, String editedNilaiCf) {
-        // Build the request JSON object
-        JSONObject requestObject = new JSONObject();
-        try {
-            requestObject.put("aturan_id", aturanId);
-            requestObject.put("edited_nilai_cf", editedNilaiCf);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // Make the request to update the nilai_cf in the database
-        String url = "https://streskerja.000webhostapp.com/update_nilai_cf.php"; // Replace with the actual URL for update_nilai_cf.php
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                requestObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int status = response.getInt("status");
-                            if (status == 0) {
-                                Toast.makeText(AturanViewActivity.this, response.getString("message"), Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(AturanViewActivity.this, "Failed to update nilai_cf", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(AturanViewActivity.this, "Error updating nilai_cf: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-
-        // Set a timeout for the request to prevent the application from freezing indefinitely
-        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(
-                5000,  // Timeout in milliseconds
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
-
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == EDIT_REQUEST_CODE && resultCode == RESULT_OK) {
-            String editedGejala = data.getStringExtra("edited_gejala");
-            String editedNilaiCf = data.getStringExtra("edited_nilai_cf");
-            int editedPosition = data.getIntExtra("edited_position", -1);
+        if (requestCode == EDIT_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            int deletedPosition = data.getIntExtra("deleted_position", -1);
+            int updatedPosition = data.getIntExtra("updated_position", -1);
 
-            if (editedPosition != -1) {
-                symptomsList.set(editedPosition, editedGejala);
-                nilaiCfList.set(editedPosition, editedNilaiCf);
+            if (deletedPosition != -1) {
+                // Refresh the list view after successful deletion
+                symptomsList.remove(deletedPosition);
+                nilaiCfList.remove(deletedPosition);
+                id_aturanList.remove(deletedPosition);
                 ((CustomListAdapter) listDaftarGejala.getAdapter()).notifyDataSetChanged();
+            } else if (updatedPosition != -1) {
+                // Refresh the list view after successful update
+                String editedGejala = data.getStringExtra("edited_gejala");
+                String editedNilaiCf = data.getStringExtra("edited_nilai_cf");
 
-                // Update the edited nilai_cf in the database
-                String aturanId = ""; // Replace with the actual aturan_id of the edited item
-                updateNilaiCfInDatabase(aturanId, editedNilaiCf);
+                symptomsList.set(updatedPosition, editedGejala);
+                nilaiCfList.set(updatedPosition, editedNilaiCf);
+
+                ((CustomListAdapter) listDaftarGejala.getAdapter()).notifyDataSetChanged();
             }
         }
     }
+
 }

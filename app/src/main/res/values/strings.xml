@@ -58,6 +58,7 @@
     <string name="selamat_datang_user">Yuk Cek Tingkat Stres Kamu Disini</string>
     <string name="hasil_diagnosa">Hasil Diagnosa</string>
     <string name="penyakit">Penyakit</string>
+    <string name="penyakit_nama">Nama Penyakit</string>
 
     <string name="logout">Logout</string>
     <string name="panduan_admin">Panduan Aplikasi</string>
