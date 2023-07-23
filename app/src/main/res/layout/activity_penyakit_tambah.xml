@@ -122,7 +122,7 @@
             <EditText
                 android:id="@+id/et_deskripsi"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_input_edit"
                 android:fontFamily="@font/mmedium"
@@ -165,7 +165,7 @@
             <EditText
                 android:id="@+id/et_solusi"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="125dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/bg_input_edit"
                 android:fontFamily="@font/mmedium"

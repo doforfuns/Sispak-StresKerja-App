@@ -10,6 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="@font/mregular"
         android:buttonTint="@color/blueSecondary"
         android:focusable="false"
@@ -25,12 +27,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/mlight"
         android:layout_marginLeft="31dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="10dp"
         android:inputType="numberDecimal"
         android:background="@drawable/bg_layout_white"
         android:hint="Input Nilai CF Pakar"
         android:textColor="@color/black"
         android:textColorHint="@color/grayPrimary"
+        android:textAppearance="?android:textAppearanceMedium"
         android:visibility="gone"/>
 
 </LinearLayout>

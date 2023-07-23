@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -32,8 +34,8 @@ public class GejalaActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_gejala.php";
-    private ListView lv;
-    private SimpleAdapter adapter;
+    private RecyclerView recyclerView; // Changed from ListView to RecyclerView
+    private GejalaAdapter adapter; // Removed the redundant adapter variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,8 @@ public class GejalaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gejala);
         setTitle("Data Gejala");
 
-        lv = findViewById(R.id.list_gejala);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -76,39 +79,34 @@ public class GejalaActivity extends AppCompatActivity {
                             boolean kosong = true;
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                HashMap<String, String> map = new HashMap<String, String>();
+                                HashMap<String, String> map = new HashMap<>();
                                 map.put("id_gejala", jsonObject.getString("id_gejala"));
                                 map.put("nama_gejala", jsonObject.getString("nama_gejala"));
                                 list.add(map);
                                 kosong = false;
                             }
-                            adapter = new SimpleAdapter(
-                                    GejalaActivity.this,
-                                    list,
-                                    R.layout.gejala_list,
-                                    new String[]{"id_gejala", "nama_gejala"},
-                                    new int[]{R.id.id_gejala, R.id.nama_gejala});
-                            lv.setAdapter(adapter);
-
-                            AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View container, int position, long id) {
-                                    LinearLayout linearLayout = (LinearLayout) container;
-                                    TextView tv_id = (TextView) linearLayout.getChildAt(0);
-                                    Intent intent = new Intent(GejalaActivity.this, GejalaEditActivity.class);
-                                    intent.putExtra("id_gejala", tv_id.getText().toString());
-                                    startActivity(intent);
-                                }
-                            };
-
-                            lv.setOnItemClickListener(itemClickListener);
 
                             if (kosong) {
                                 Toast.makeText(GejalaActivity.this, "Tidak ada data gejala",
                                         Toast.LENGTH_SHORT).show();
-                            }
+                            } else {
+                                adapter = new GejalaAdapter(list, GejalaActivity.this);
 
-                            adapter.notifyDataSetChanged();
+                                // Set item click listener for the adapter
+                                adapter.setOnItemClickListener((view, position) -> {
+                                    HashMap<String, String> gejala = list.get(position);
+                                    String idGejala = gejala.get("id_gejala");
+                                    Intent intent = new Intent(GejalaActivity.this, GejalaEditActivity.class);
+                                    intent.putExtra("id_gejala", idGejala);
+                                    startActivity(intent);
+                                });
+
+                                recyclerView.setAdapter(adapter);
+
+                                // Add DividerItemDecoration to show dividers between items
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+                                recyclerView.addItemDecoration(dividerItemDecoration);
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -124,6 +122,7 @@ public class GejalaActivity extends AppCompatActivity {
 
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

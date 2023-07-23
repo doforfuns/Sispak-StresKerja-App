@@ -1,6 +1,7 @@
 package com.sistempakarstreskerja.admin;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -81,6 +82,9 @@ public class PenyakitTambahActivity extends AppCompatActivity {
                         if (response.getInt("status") == 0) {
                             Toast.makeText(getApplicationContext(),
                                     response.getString("message"), Toast.LENGTH_SHORT).show();
+                            // After successfully adding data
+                            Intent resultIntent = new Intent();
+                            setResult(RESULT_OK, resultIntent);
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(),

@@ -4,15 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.AdapterView;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -30,8 +31,8 @@ public class AturanActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_aturan.php";
-    private ListView lv;
-    private SimpleAdapter adapter;
+    private RecyclerView recyclerView;
+    private AturanAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,9 @@ public class AturanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_aturan);
         setTitle("Data Aturan");
 
-        lv = findViewById(R.id.list_aturan);
-    }
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         getData();
     }
 
@@ -75,30 +73,31 @@ public class AturanActivity extends AppCompatActivity {
                                 list.add(map);
                                 kosong = false;
                             }
-                            adapter = new SimpleAdapter(
-                                    AturanActivity.this,
-                                    list,
-                                    R.layout.aturan_list,
-                                    new String[]{"id_penyakit", "nama_penyakit", "daftar_gejala"},
-                                    new int[]{R.id.id_penyakit, R.id.nama_penyakit, R.id.daftar_gejala});
-                            lv.setAdapter(adapter);
-
-                            AdapterView.OnItemClickListener itemClickListener = (parent, container, position, id) -> {
-                                LinearLayout linearLayout = (LinearLayout) container;
-                                TextView tv_id = (TextView) linearLayout.getChildAt(0);
-                                Intent intent = new Intent(AturanActivity.this, AturanViewActivity.class);
-                                intent.putExtra("id_penyakit", tv_id.getText().toString());
-                                startActivity(intent);
-                            };
-
-                            lv.setOnItemClickListener(itemClickListener);
 
                             if (kosong) {
                                 Toast.makeText(AturanActivity.this, "Tidak ada data aturan",
                                         Toast.LENGTH_SHORT).show();
-                            }
+                            } else {
+                                adapter = new AturanAdapter(list, AturanActivity.this);
 
-                            adapter.notifyDataSetChanged();
+                                // Set item click listener for the adapter
+                                adapter.setOnItemClickListener(new AturanAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        HashMap<String, String> aturan = list.get(position);
+                                        String idPenyakit = aturan.get("id_penyakit");
+                                        Intent intent = new Intent(AturanActivity.this, AturanViewActivity.class);
+                                        intent.putExtra("id_penyakit", idPenyakit);
+                                        startActivity(intent);
+                                    }
+                                });
+
+                                recyclerView.setAdapter(adapter);
+
+                                // Add DividerItemDecoration to show dividers between items
+                                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+                                recyclerView.addItemDecoration(dividerItemDecoration);
+                            }
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     response.getString("message"), Toast.LENGTH_SHORT).show();

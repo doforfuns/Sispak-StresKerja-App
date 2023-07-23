@@ -2,18 +2,21 @@ package com.sistempakarstreskerja.admin;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.Toast;
-import android.widget.TextView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import android.view.inputmethod.InputMethodManager;
-import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -32,11 +35,12 @@ public class AturanEditActivity extends AppCompatActivity {
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_gejala.php";
     private static final String url_update = "https://streskerja.000webhostapp.com/update_aturan.php";
     private AturanEditAdapter dataAdapter = null;
-    private ArrayList<Gejala> gejalaList = new ArrayList<Gejala>();
+    private ArrayList<Gejala> gejalaList = new ArrayList<>();
     private Gejala gejala;
     private String id_penyakit;
     private String nama_penyakit = "";
     private StringBuffer responseText;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,9 @@ public class AturanEditActivity extends AppCompatActivity {
 
         TextView tv_nama_penyakit = findViewById(R.id.tv_nama_penyakit);
         tv_nama_penyakit.setText(nama_penyakit);
+
+        recyclerView = findViewById(R.id.lv_gejala);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getDaftarGejala();
 
@@ -72,10 +79,13 @@ public class AturanEditActivity extends AppCompatActivity {
                 }
             }
 
+            if (!dataAdapter.hasSelectedGejala()) {
+                showNoGejalaSelectedWarning();
+                return; // Jika tidak ada gejala yang dipilih, hentikan proses penyimpanan
+            }
             if (dataAdapter.hasEmptyOrInvalidCF()) {
                 showCFEmptyWarning(); // Show the warning dialog
-            } else
-            {
+            } else {
                 updateAturan(responseText.toString(), cfValues); // Kirim nilai_cf ke method updateAturan()
             }
 
@@ -95,7 +105,7 @@ public class AturanEditActivity extends AppCompatActivity {
                     pDialog.dismiss();
                     try {
                         if (response.getInt("status") == 0) {
-                            gejalaList = new ArrayList<Gejala>();
+                            gejalaList = new ArrayList<>();
                             JSONArray jsonArray = response.getJSONArray("gejala");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -103,9 +113,11 @@ public class AturanEditActivity extends AppCompatActivity {
                                 gejala = new Gejala(name, false);
                                 gejalaList.add(gejala);
                             }
-                            dataAdapter = new AturanEditAdapter(AturanEditActivity.this, R.layout.gejala_list_ceklis, gejalaList);
-                            ListView listView = findViewById(R.id.lv_gejala);
-                            listView.setAdapter(dataAdapter);
+                            dataAdapter = new AturanEditAdapter(this, gejalaList);
+                            recyclerView.setAdapter(dataAdapter);
+                            // Add DividerItemDecoration to show dividers between items
+                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+                            recyclerView.addItemDecoration(dividerItemDecoration);
                         } else {
                             Toast.makeText(getApplicationContext(),
                                     response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -177,7 +189,7 @@ public class AturanEditActivity extends AppCompatActivity {
     private void showCFEmptyWarning() {
         AlertDialog.Builder builder = new AlertDialog.Builder(AturanEditActivity.this);
         builder.setTitle("Peringatan!");
-        builder.setMessage("Ada gejala yang nilai CF-nya tidak valid atau kosong, pastikan semua gejala terpilih memiliki nilai CF yang valid!");
+        builder.setMessage("Pastikan semua gejala yang terpilih memiliki nilai CF Pakar yang valid!");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -186,6 +198,20 @@ public class AturanEditActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
+    private void showNoGejalaSelectedWarning() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Peringatan!");
+        builder.setMessage("Harap pilih daftar gejala diagnosa yang sesuai dengan arahan pakar!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

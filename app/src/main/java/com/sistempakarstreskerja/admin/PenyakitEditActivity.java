@@ -1,6 +1,7 @@
 package com.sistempakarstreskerja.admin;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.sistempakarstreskerja.MySingleton;
 import com.sistempakarstreskerja.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -66,6 +69,10 @@ public class PenyakitEditActivity extends AppCompatActivity {
         getPenyakit();
     }
 
+    public class DataRefreshEvent {
+        // Tambahkan atribut atau data yang dibutuhkan (jika ada)
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -79,7 +86,7 @@ public class PenyakitEditActivity extends AppCompatActivity {
         if (id == R.id.action_delete) {
             new AlertDialog.Builder(PenyakitEditActivity.this)
                     .setTitle("Konfirmasi")
-                    .setMessage("Anda yakin penyakit akan dihapus ?")
+                    .setMessage("Anda yakin penyakit akan dihapus?")
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton("Ya, Hapus", (dialog, whichButton) -> {
                         hapusPenyakit();
@@ -111,6 +118,9 @@ public class PenyakitEditActivity extends AppCompatActivity {
                     try {
                         Toast.makeText(getApplicationContext(),
                                 response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                        // Send data refresh event to PenyakitActivity
+                        EventBus.getDefault().post(new DataRefreshEvent());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -183,6 +193,8 @@ public class PenyakitEditActivity extends AppCompatActivity {
                         if (response.getInt("status") == 0) {
                             Toast.makeText(getApplicationContext(),
                                     response.getString("message"), Toast.LENGTH_SHORT).show();
+                            // Send data refresh event to PenyakitActivity
+                            EventBus.getDefault().post(new DataRefreshEvent());
                             finish();
                         } else {
                             Toast.makeText(getApplicationContext(),
@@ -224,3 +236,4 @@ public class PenyakitEditActivity extends AppCompatActivity {
         return true;
     }
 }
+

@@ -12,6 +12,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="greenpremier">#20D17E</color>
     <color name="blue">#0000FF</color>
+    <color name="grey">#808080</color>
+
 
     <color name="graySecondary">#EDF1F8</color>
     <color name="grayTersier">#767676</color>

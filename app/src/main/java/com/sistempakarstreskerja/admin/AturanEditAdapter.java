@@ -4,22 +4,30 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.view.Gravity;
-import android.view.inputmethod.InputMethodManager;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sistempakarstreskerja.R;
 
 import java.util.ArrayList;
 
-public class AturanEditAdapter extends ArrayAdapter<Gejala> {
+public class AturanEditAdapter extends RecyclerView.Adapter<AturanEditAdapter.ViewHolder> {
 
     private ArrayList<Gejala> gejalaList;
-
+    private Context context;
     private static boolean toastShown = false; // Static flag to track whether the toast has been shown
+
+    public AturanEditAdapter(Context context, ArrayList<Gejala> gejalaList) {
+        this.context = context;
+        this.gejalaList = new ArrayList<>();
+        this.gejalaList.addAll(gejalaList);
+    }
 
     private static void showToastOnce(Context context, String message) {
         if (!toastShown) {
@@ -30,22 +38,19 @@ public class AturanEditAdapter extends ArrayAdapter<Gejala> {
         }
     }
 
-    public AturanEditAdapter(Context context, int textViewResourceId,
-                             ArrayList<Gejala> gejalaList) {
-        super(context, textViewResourceId, gejalaList);
-        this.gejalaList = new ArrayList<>();
-        this.gejalaList.addAll(gejalaList);
-
-    }
-
-    private static class ViewHolder {
-        CheckBox name;
-        EditText et_certainty_factor;
-    }
-
     public ArrayList<Gejala> getGejalaList() {
         return gejalaList;
     }
+
+    public boolean hasSelectedGejala() {
+        for (Gejala gejala : gejalaList) {
+            if (gejala.isSelected()) {
+                return true; // Ada setidaknya satu gejala yang dipilih
+            }
+        }
+        return false; // Tidak ada gejala yang dipilih
+    }
+
 
     // In AturanEditAdapter class
     public boolean hasEmptyOrInvalidCF() {
@@ -61,69 +66,16 @@ public class AturanEditAdapter extends ArrayAdapter<Gejala> {
         return false; // All selected symptoms have valid CF values
     }
 
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View view = inflater.inflate(R.layout.gejala_list_ceklis, parent, false);
+        return new ViewHolder(view);
+    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            LayoutInflater vi = (LayoutInflater) getContext().getSystemService(
-                    Context.LAYOUT_INFLATER_SERVICE);
-            convertView = vi.inflate(R.layout.gejala_list_ceklis, null);
-
-            holder = new ViewHolder();
-            holder.name = convertView.findViewById(R.id.checkBox1);
-            holder.et_certainty_factor = convertView.findViewById(R.id.et_certainty_factor);
-            convertView.setTag(holder);
-
-            holder.name.setOnClickListener(v -> {
-                CheckBox cb = (CheckBox) v;
-                Gejala gejala = (Gejala) cb.getTag();
-                gejala.setSelected(cb.isChecked());
-                if (cb.isChecked()) {
-                    holder.et_certainty_factor.setVisibility(View.VISIBLE);
-                    holder.et_certainty_factor.requestFocus(); // Set fokus ke EditText nilai CF
-                    InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.showSoftInput(holder.et_certainty_factor, InputMethodManager.SHOW_IMPLICIT); // Tampilkan keyboard
-                } else {
-                    holder.et_certainty_factor.setVisibility(View.GONE);
-                    // Clear the nilai_cf when hiding the EditText
-                    holder.et_certainty_factor.setText("");
-                }
-
-                // Check if this is the first gejala being selected
-                if (!toastShown && cb.isChecked()) {
-                    showToastOnce(getContext(), "Harap masukkan nilai CF Pakar yang valid!");
-                    toastShown = true; // Set the flag to true to prevent showing the Toast again
-                }
-            });
-
-
-            holder.et_certainty_factor.setOnFocusChangeListener((v, hasFocus) -> {
-                if (!hasFocus) {
-                    EditText et_cf = (EditText) v;
-                    String cfValueStr = et_cf.getText().toString();
-                    if (!cfValueStr.isEmpty()) {
-                        double cfValue = 0.0;
-                        try {
-                            cfValue = Double.parseDouble(cfValueStr);
-                            Gejala gejala = (Gejala) holder.name.getTag();
-                            gejala.setNilaiCf(cfValue);
-                        } catch (NumberFormatException e) {
-                            e.printStackTrace();
-                            // Show an error message or handle the invalid input accordingly
-                            // For example, you can display a Toast message
-                            showToastOnce(getContext(), "Masukkan nilai CF Pakar yang valid!");
-                        }
-                    } else {
-                        // If the EditText is empty, do not change the nilai_cf
-                    }
-                }
-            });
-
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Gejala gejala = gejalaList.get(position);
         holder.name.setText(gejala.getName());
         holder.name.setChecked(gejala.isSelected());
@@ -140,7 +92,65 @@ public class AturanEditAdapter extends ArrayAdapter<Gejala> {
             // Clear the EditText text when hiding the EditText for non-selected Gejala
             holder.et_certainty_factor.setText("");
         }
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return gejalaList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        CheckBox name;
+        EditText et_certainty_factor;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            name = itemView.findViewById(R.id.checkBox1);
+            et_certainty_factor = itemView.findViewById(R.id.et_certainty_factor);
+
+            name.setOnClickListener(v -> {
+                CheckBox cb = (CheckBox) v;
+                Gejala gejala = (Gejala) cb.getTag();
+                gejala.setSelected(cb.isChecked());
+                if (cb.isChecked()) {
+                    et_certainty_factor.setVisibility(View.VISIBLE);
+                    et_certainty_factor.requestFocus(); // Set focus to EditText nilai CF
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(et_certainty_factor, InputMethodManager.SHOW_IMPLICIT); // Show keyboard
+                } else {
+                    et_certainty_factor.setVisibility(View.GONE);
+                    // Clear the nilai_cf when hiding the EditText
+                    et_certainty_factor.setText("");
+                }
+
+                // Check if this is the first gejala being selected
+                if (!toastShown && cb.isChecked()) {
+                    showToastOnce(context, "Harap masukkan nilai CF Pakar yang valid!");
+                    toastShown = true; // Set the flag to true to prevent showing the Toast again
+                }
+            });
+
+            et_certainty_factor.setOnFocusChangeListener((v, hasFocus) -> {
+                if (!hasFocus) {
+                    EditText et_cf = (EditText) v;
+                    String cfValueStr = et_cf.getText().toString();
+                    if (!cfValueStr.isEmpty()) {
+                        double cfValue = 0.0;
+                        try {
+                            cfValue = Double.parseDouble(cfValueStr);
+                            Gejala gejala = (Gejala) name.getTag();
+                            gejala.setNilaiCf(cfValue);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            // Show an error message or handle the invalid input accordingly
+                            // For example, you can display a Toast message
+                            showToastOnce(context, "Masukkan nilai CF Pakar yang valid!");
+                        }
+                    } else {
+                        // If the EditText is empty, do not change the nilai_cf
+                    }
+                }
+            });
+        }
     }
 }

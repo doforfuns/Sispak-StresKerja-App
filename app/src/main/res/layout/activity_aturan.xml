@@ -10,10 +10,6 @@
         android:layout_height="233dp"
         android:background="@drawable/bg_purple" />
 
-    <ScrollView
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
@@ -21,20 +17,19 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/bg_layout_white"
             android:orientation="vertical"
-            android:paddingBottom="8dp">
+            android:paddingBottom="0dp">
 
-            <ListView
-                android:id="@+id/list_aturan"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="885dp"
-                android:divider="@color/black"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/mmedium"
+                android:divider="@color/black"
                 android:dividerHeight="0.5dp" />
 
         </LinearLayout>
-
-    </ScrollView>
 
 </FrameLayout>

@@ -14,13 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="30dp"
+        android:layout_margin="45dp"
         android:src="@drawable/ic_add" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -29,22 +24,20 @@
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/bg_layout_white"
             android:orientation="vertical"
-            android:paddingBottom="8dp">
+            android:paddingTop="7dp"
+            android:paddingBottom="90dp">
 
-            <ListView
-                android:id="@+id/list_gejala"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="810dp"
+                android:layout_height="wrap_content"
                 android:divider="@color/black"
                 android:dividerHeight="0.5dp"
                 android:fontFamily="@font/mmedium" />
 
-
-
         </LinearLayout>
-
-    </ScrollView>
 
 </FrameLayout>
