@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="RadioGroupWithBox" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:showDividers">beginning|middle|end</item>
+        <item name="android:divider">@drawable/radio_divider</item>
+    </style>
+</resources>

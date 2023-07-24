@@ -17,7 +17,6 @@
         android:background="@drawable/bg_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
-
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -116,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mlight"
-                android:text="Lakukan diagnosa sesuai kebutuhanmu"
+                android:text="Lakukan diagnosa sesuai kebutuhan"
                 android:textColor="@color/black"
 
                 android:textSize="18sp" />
@@ -143,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mlight"
-                android:text="Cek informasi tentang penyakit di daftar penyakit"
+                android:text="Cek informasi tentang diagnosa di daftar diagnosa"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -167,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mlight"
-                android:text="Harap menghubungi dokter / klinik terdekat untuk tindakan lebih lanjut
+                android:text="Harap menghubungi pakar / dokter untuk konsultasi lebih lanjut
 "
                 android:textColor="@color/black"
                 android:textSize="18sp" />

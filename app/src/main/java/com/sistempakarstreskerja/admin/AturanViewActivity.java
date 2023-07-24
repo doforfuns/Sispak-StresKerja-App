@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +70,10 @@ public class AturanViewActivity extends AppCompatActivity {
         });
 
         recyclerDaftarGejala.setAdapter(adapter);
+
+        // Add DividerItemDecoration to show dividers between items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        recyclerDaftarGejala.addItemDecoration(dividerItemDecoration);
     }
 
     @Override

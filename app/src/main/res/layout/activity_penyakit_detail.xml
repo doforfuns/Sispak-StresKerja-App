@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bbackground">
 
+    <View
+        android:id="@id/view"
+        android:layout_width="match_parent"
+        android:layout_height="233dp"
+        android:background="@drawable/bg_purple" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -11,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_layout_white"
         android:paddingBottom="30dp"
         android:paddingTop="30dp"
@@ -20,7 +26,6 @@
         android:padding="12dp"
         >
 
-
         <TextView
             android:id="@+id/tv_nama_penyakit"
             android:layout_width="match_parent"
@@ -28,10 +33,9 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:text="@string/nama_penyakit"
-            android:fontFamily="@font/mregular"
+            android:fontFamily="@font/mmedium"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
             android:layout_width="match_parent"
@@ -39,19 +43,21 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="5dp"
-            android:fontFamily="@font/mlight"
+            android:fontFamily="@font/mmedium"
             android:text="@string/deskripsi"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_deskripsi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:fontFamily="@font/mlight"
+            android:fontFamily="@font/mregular"
             android:text="@string/deskripsi"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@color/graySecondary"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -59,19 +65,43 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="5dp"
-            android:fontFamily="@font/mlight"
-            android:text="@string/solusi"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="16sp" />
+            android:fontFamily="@font/mmedium"
+            android:text="Solusi Penanganan"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tv_solusi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mregular"
             android:layout_margin="5dp"
             android:text="@string/solusi"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:background="@color/graySecondary"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/mmedium"
+            android:text="Daftar Gejala"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_daftar_gejala"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:divider="@color/black"
+            android:dividerHeight="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/graySecondary"/>
 
     </LinearLayout>
 
-</ScrollView>
+</FrameLayout>

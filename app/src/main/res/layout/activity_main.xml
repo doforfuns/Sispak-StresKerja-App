@@ -11,12 +11,11 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="330dp"
-        android:background="@drawable/bg_gradient_primary_blue"
+        android:background="@drawable/bg_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/textView2"
@@ -37,9 +36,9 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="161dp"
-        android:layout_height="80dp"
+        android:layout_height="110dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="34dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/facecarewhite"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_marginBottom="4dp">
 
 <!--                <Button-->
@@ -119,94 +118,98 @@
 
                 <Button
                     android:id="@+id/btn_diagnosa_cf"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:gravity="center|center_vertical"
                     android:background="@drawable/bg_btn_white_primary"
-                    android:drawableTop="@drawable/cf"
+                    android:drawableStart="@drawable/ic_cf"
                     android:fontFamily="@font/mmedium"
                     android:text="@string/diagnosa_akurat"
-                    android:textAlignment="center"
                     android:textColor="@color/blackPrimary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
                     app:backgroundTint="@color/white" />
 
                 <Button
                     android:id="@+id/btn_penyakit"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:gravity="center|center_vertical"
                     android:background="@drawable/bg_btn_white_primary"
-                    android:drawableTop="@drawable/icon_penyakit"
+                    android:drawableLeft="@drawable/ic_cp"
                     android:fontFamily="@font/mmedium"
                     android:text="@string/daftar_penyakit"
-                    android:textAlignment="center"
                     android:textColor="@color/blackPrimary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
                     app:backgroundTint="@color/white" />
 
                 <Button
                     android:id="@+id/btn_riwayat"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:gravity="center|center_vertical"
                     android:background="@drawable/bg_btn_white_primary"
-                    android:drawableTop="@drawable/icon_riwayat"
+                    android:drawableLeft="@drawable/ic_rw"
                     android:fontFamily="@font/mmedium"
                     android:text="@string/riwayat_diagnosa"
-                    android:textAlignment="center"
                     android:textColor="@color/blackPrimary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
                     app:backgroundTint="@color/white" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
 
                 <Button
                     android:id="@+id/btn_panduanuser"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:gravity="center|center_vertical"
                     android:background="@drawable/bg_btn_white_primary"
-                    android:drawableTop="@drawable/icon_informasi"
+                    android:drawableLeft="@drawable/ic_informasi"
                     android:fontFamily="@font/mmedium"
                     android:text="@string/informasi_user"
-                    android:textAlignment="center"
                     android:textColor="@color/blackPrimary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="@color/design_default_color_background" />
+                    android:textAppearance="?android:textAppearanceMedium"
+                    app:backgroundTint="@color/white" />
 
                 <Button
                     android:id="@+id/btn_logout"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="7dp"
                     android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:gravity="center|center_vertical"
                     android:background="@drawable/bg_btn_white_primary"
-                    android:drawableTop="@drawable/icon_logout"
+                    android:drawableLeft="@drawable/ic_logout"
                     android:fontFamily="@font/mmedium"
                     android:text="@string/logout"
-                    android:textAlignment="center"
                     android:textColor="@color/blackPrimary"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
+                    android:textAppearance="?android:textAppearanceMedium"
                     app:backgroundTint="@color/white" />
 
             </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal">-->
+
+<!--            </LinearLayout>-->
 
         </LinearLayout>
 

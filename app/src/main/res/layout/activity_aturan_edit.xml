@@ -54,7 +54,8 @@
                 android:fontFamily="@font/mmedium"
                 android:text="@string/nama_penyakit"
                 android:textColor="@color/black"
-                android:textAppearance="?android:textAppearanceMedium"/>
+                android:textAppearance="?android:textAppearanceMedium"
+                android:background="@color/graySecondary"/>
 
             <TextView
                 android:layout_width="match_parent"

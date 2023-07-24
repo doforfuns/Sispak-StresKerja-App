@@ -41,12 +41,12 @@
     <string name="text_hasil_diagnosa_nama_penyakit">Berdasarkan gejala terpilih, kemungkinan terkena penyakit</string>
     <string name="forward_chaining">Forward Chaining</string>
     <string name="lanjut">Lanjut</string>
-    <string name="tidak_tahu">Tidak yakin</string>
-    <string name="sedikit_yakin">Sedikit yakin</string>
-    <string name="cukup_yakin">Cukup yakin</string>
+    <string name="tidak_tahu">Tidak Tahu</string>
+    <string name="sedikit_yakin">Sedikit Yakin</string>
+    <string name="cukup_yakin">Cukup Yakin</string>
     <string name="id_pengguna">ID Pengguna</string>
     <string name="yakin">Yakin</string>
-    <string name="sangat_yakin">Sangat yakin</string>
+    <string name="sangat_yakin">Sangat Yakin</string>
     <string name="my_dashboard">Dashboard</string>
     <string name="my_dashboard_user">User Dashboard</string>
     <string name="my_dashboard_admin">Admin Dashboard</string>
@@ -65,4 +65,14 @@
     <string name="informasi_user">Panduan User</string>
     <string name="informasi_admin">Info Admin</string>
     <string name="Dashboard">Kembali ke Dashboard</string>
+
+    <string-array name="pilihan_jawaban">
+        <item>Tidak</item>
+        <item>Tidak tahu</item>
+        <item>Sedikit yakin</item>
+        <item>Cukup yakin</item>
+        <item>Yakin</item>
+        <item>Sangat yakin</item>
+    </string-array>
+
 </resources>

@@ -4,18 +4,22 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.sistempakarstreskerja.PenyakitDetailActivity;
+import com.sistempakarstreskerja.admin.PenyakitEditActivity;
+import com.sistempakarstreskerja.admin.PenyakitTambahActivity;
+import com.sistempakarstreskerja.MySingleton;
+import com.sistempakarstreskerja.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,17 +31,22 @@ import java.util.HashMap;
 public class PenyakitActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
-    private static final String url = "https://streskerja.000webhostapp.com/get_daftar_penyakit.php";
-    private ListView lv;
-    private SimpleAdapter adapter;
+    private static final String url = "https://streskerja.000webhostapp.com/get_daftar_diagnosa.php";
+    private RecyclerView recyclerView;
+    private PenyakitAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_penyakit);
-        setTitle("Daftar Penyakit");
+        setTitle("Daftar Diagnosa");
 
-        lv = findViewById(R.id.list_penyakit);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Add DividerItemDecoration to show dividers between items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         getData();
     }
@@ -62,29 +71,23 @@ public class PenyakitActivity extends AppCompatActivity {
                             boolean kosong = true;
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                HashMap<String, String> map = new HashMap<String, String>();
+                                HashMap<String, String> map = new HashMap<>();
                                 map.put("id_penyakit", jsonObject.getString("id_penyakit"));
                                 map.put("nama_penyakit", jsonObject.getString("nama_penyakit"));
                                 list.add(map);
                                 kosong = false;
                             }
-                            adapter = new SimpleAdapter(
-                                    PenyakitActivity.this,
-                                    list,
-                                    R.layout.penyakit_list,
-                                    new String[]{"id_penyakit", "nama_penyakit"},
-                                    new int[]{R.id.id_penyakit, R.id.nama_penyakit});
-                            lv.setAdapter(adapter);
 
-                            AdapterView.OnItemClickListener itemClickListener = (parent, container, position, id) -> {
-                                LinearLayout linearLayout = (LinearLayout) container;
-                                TextView tv_id = (TextView) linearLayout.getChildAt(0);
+                            adapter = new PenyakitAdapter(list, PenyakitActivity.this);
+                            recyclerView.setAdapter(adapter);
+
+                            adapter.setOnItemClickListener((view, position) -> {
+                                HashMap<String, String> penyakit = list.get(position);
+                                String idPenyakit = penyakit.get("id_penyakit");
                                 Intent intent = new Intent(PenyakitActivity.this, PenyakitDetailActivity.class);
-                                intent.putExtra("id_penyakit", tv_id.getText().toString());
+                                intent.putExtra("id_penyakit", idPenyakit);
                                 startActivity(intent);
-                            };
-
-                            lv.setOnItemClickListener(itemClickListener);
+                            });
 
                             if (kosong) {
                                 Toast.makeText(PenyakitActivity.this, "Tidak ada data penyakit",

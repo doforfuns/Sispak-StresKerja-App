@@ -28,7 +28,7 @@ import java.util.HashMap;
 public class DiagnosaCfActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
-    private static final String url = "https://streskerja.000webhostapp.com/get_daftar_gejala.php";
+    private static final String url = "https://streskerja.000webhostapp.com/get_gejala_cf.php";
     private ArrayList<HashMap<String, String>> list;
     private ArrayList<Double> hasil;
     private TextView text_pertanyaan;
@@ -42,6 +42,9 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnosa_cf);
         setTitle("Diagnosa Certainty Factor");
+
+        // Tampilkan peringatan
+        showAlertDialog();
 
         getData();
 
@@ -177,6 +180,16 @@ public class DiagnosaCfActivity extends AppCompatActivity {
                 .setMessage("Anda yakin mau kembali ?")
                 .setPositiveButton("Ya", (arg0, arg1) -> finish())
                 .setNegativeButton("Tidak", (arg0, arg1) -> {
+                })
+                .show();
+    }
+
+    private void showAlertDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Perhatian!")
+                .setMessage("Jawablah dengan hati-hati, semakin yakin artinya nilainya akan semakin besar. Jika tidak merasakan gejala yang ditampilkan, maka pilih jawaban tidak.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Aksi jika pengguna menekan tombol OK (bisa kosongkan jika tidak ada aksi tambahan)
                 })
                 .show();
     }

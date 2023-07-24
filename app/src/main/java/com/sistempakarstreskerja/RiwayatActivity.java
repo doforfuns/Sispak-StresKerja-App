@@ -6,15 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -31,9 +31,9 @@ public class RiwayatActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private static final String url = "https://streskerja.000webhostapp.com/get_daftar_riwayat.php";
     private static final String url_delete = "https://streskerja.000webhostapp.com/hapus_daftar_riwayat.php";
-    private ListView lv;
+    private RecyclerView recyclerView;
     private TextView tv_tidak_ada;
-    private SimpleAdapter adapter;
+    private PenyakitRiwayatAdapter adapter;
     private User user;
 
     @Override
@@ -45,8 +45,15 @@ public class RiwayatActivity extends AppCompatActivity {
         SessionHandler session = new SessionHandler(this);
         user = session.getUserDetails();
 
-        lv = findViewById(R.id.list_riwayat);
+        recyclerView = findViewById(R.id.list_riwayat); // Replace R.id.recyclerView with the actual ID of your RecyclerView in the XML layout.
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
         tv_tidak_ada = findViewById(R.id.tv_tidak_ada);
+
+        // Add DividerItemDecoration to show dividers between items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         getData();
     }
@@ -130,46 +137,50 @@ public class RiwayatActivity extends AppCompatActivity {
                     try {
                         if (response.getInt("status") == 0) {
                             JSONArray jsonArray = response.getJSONArray("riwayat");
-                            ArrayList<HashMap<String, String>> list = new ArrayList<>();
+                            ArrayList<RiwayatItem> riwayatList = new ArrayList<>();
+
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                HashMap<String, String> map = new HashMap<String, String>();
-                                String nama_penyakit = "";
+                                String namaPenyakit = "";
                                 if (jsonObject.getString("nilai").equals("null")) {
-                                    nama_penyakit = jsonObject.getString("nama_penyakit");
+                                    namaPenyakit = jsonObject.getString("nama_penyakit");
                                 } else {
-                                    nama_penyakit = jsonObject.getString("nama_penyakit") +
+                                    namaPenyakit = jsonObject.getString("nama_penyakit") +
                                             " (" + jsonObject.getString("nilai") + "%)";
                                 }
-                                map.put("nama_penyakit", nama_penyakit);
-                                map.put("tanggal", jsonObject.getString("tanggal"));
-                                map.put("metode", jsonObject.getString("metode"));
-                                map.put("id_penyakit", jsonObject.getString("id_penyakit"));
-                                list.add(map);
-                            }
-                            adapter = new SimpleAdapter(
-                                    RiwayatActivity.this,
-                                    list,
-                                    R.layout.riwayat_list,
-                                    new String[]{"nama_penyakit", "tanggal", "id_penyakit", "metode"},
-                                    new int[]{R.id.tv_hasil, R.id.tv_tanggal, R.id.id_penyakit, R.id.tv_metode});
-                            lv.setAdapter(adapter);
+                                String tanggal = jsonObject.getString("tanggal");
+                                String metode = jsonObject.getString("metode");
+                                String idPenyakit = jsonObject.getString("id_penyakit"); // Get the id_penyakit from the JSON response
 
-                            AdapterView.OnItemClickListener itemClickListener = (parent, container, position, id) -> {
-                                RelativeLayout relativeLayout = (RelativeLayout) container;
-                                TextView tv_id = (TextView) relativeLayout.getChildAt(0);
-                                if (!tv_id.getText().toString().equals("")) {
+                                RiwayatItem item = new RiwayatItem(namaPenyakit, tanggal, metode, idPenyakit);
+                                riwayatList.add(item);
+                            }
+
+
+                            if (riwayatList.size() > 0) {
+                                // Hide the "Tidak ada riwayat" message if there are items in the list
+                                recyclerView.setVisibility(View.VISIBLE);
+                                tv_tidak_ada.setVisibility(View.GONE);
+                            } else {
+                                // Show the "Tidak ada riwayat" message if the list is empty
+                                recyclerView.setVisibility(View.GONE);
+                                tv_tidak_ada.setVisibility(View.VISIBLE);
+                            }
+
+                            PenyakitRiwayatAdapter adapter = new PenyakitRiwayatAdapter(riwayatList);
+                            recyclerView.setAdapter(adapter);
+
+                            adapter.setOnItemClickListener((view, position) -> {
+                                RiwayatItem riwayatItem = riwayatList.get(position);
+                                String idPenyakit = riwayatItem.getIdPenyakit(); // Modify this if you have an ID field in RiwayatItem
+                                if (idPenyakit != null && !idPenyakit.isEmpty()) {
                                     Intent intent = new Intent(RiwayatActivity.this, PenyakitDetailActivity.class);
-                                    intent.putExtra("id_penyakit", tv_id.getText().toString());
+                                    intent.putExtra("id_penyakit", idPenyakit);
                                     startActivity(intent);
                                 }
-                            };
-
-                            lv.setOnItemClickListener(itemClickListener);
-
-                            adapter.notifyDataSetChanged();
+                            });
                         } else {
-                            lv.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.GONE);
                             tv_tidak_ada.setVisibility(View.VISIBLE);
                         }
                     } catch (JSONException e) {
@@ -183,4 +194,5 @@ public class RiwayatActivity extends AppCompatActivity {
 
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
     }
+
 }
