@@ -20,6 +20,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+
 public class LoginActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
@@ -90,13 +92,18 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
         displayLoader();
+
         JSONObject request = new JSONObject();
         try {
             request.put("username", username);
             request.put("password", password);
         } catch (JSONException e) {
+            pDialog.dismiss();
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Terjadi kesalahan saat memproses data login.", Toast.LENGTH_SHORT).show();
+            return;
         }
+
         JsonObjectRequest jsArrayRequest = new JsonObjectRequest
                 (Request.Method.POST, login_url, request, response -> {
                     pDialog.dismiss();
@@ -114,20 +121,33 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
                             }
                         } else {
-                            Toast.makeText(getApplicationContext(),
-                                    response.getString("message"), Toast.LENGTH_SHORT).show();
+                            String errorMessage = response.getString("message");
+                            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Terjadi kesalahan dalam memproses respons server.", Toast.LENGTH_SHORT).show();
                     }
                 }, error -> {
                     pDialog.dismiss();
-                    Toast.makeText(getApplicationContext(),
-                            error.getMessage(), Toast.LENGTH_SHORT).show();
+                    String errorMessage = "Terjadi kesalahan dalam menghubungi server.";
+                    if (error.networkResponse != null && error.networkResponse.data != null) {
+                        try {
+                            String errorData = new String(error.networkResponse.data, "UTF-8");
+                            JSONObject errorObject = new JSONObject(errorData);
+                            if (errorObject.has("message")) {
+                                errorMessage = errorObject.getString("message");
+                            }
+                        } catch (UnsupportedEncodingException | JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
                 });
 
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
     }
+
 
     // Metode ini akan dipanggil ketika TextView "forgot_password" diklik
     public void showContactAdminPopup(View view) {

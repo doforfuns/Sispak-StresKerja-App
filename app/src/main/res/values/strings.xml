@@ -67,6 +67,7 @@
     <string name="Dashboard">Kembali ke Dashboard</string>
     <string name="lihat_hasil_lainnya">Diagnosa Pembanding</string>
     <string name="riwayat">Data Riwayat</string>
+    <string name="gejala_terpilih">Gejala Yang dipilih</string>
 
     <string-array name="pilihan_jawaban">
         <item>Tidak</item>

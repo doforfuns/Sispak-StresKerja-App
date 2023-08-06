@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgPrimary"
+    android:background="@color/bgPrimary">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -12,7 +17,7 @@
         android:layout_width="262dp"
         android:layout_height="308dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/icon_sukses"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,6 +94,26 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerView"
         />
 
+    <!-- Tombol untuk Menampilkan Gejala yang Dipilih -->
+<!--    <Button-->
+<!--        android:id="@+id/btn_gejala_dipilih"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:layout_marginEnd="48dp"-->
+<!--        android:layout_marginStart="48dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:background="@drawable/bg_btn_blue_primary"-->
+<!--        android:fontFamily="@font/mmedium"-->
+<!--        android:text="@string/gejala_terpilih"-->
+<!--        android:textColor="#FFF"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/btn_dashboarduser"-->
+<!--        />-->
+
     <Button
         android:id="@+id/btn_dashboarduser"
         android:textStyle="bold"
@@ -97,6 +122,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginStart="48dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/bg_btn_blue_primary"
         android:fontFamily="@font/mmedium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,5 +135,6 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_penyakit"
         />
 
-
 </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
