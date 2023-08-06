@@ -185,6 +185,8 @@ public class RiwayatActivity extends AppCompatActivity {
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
+                        Toast.makeText(getApplicationContext(),
+                                "Error parsing JSON response", Toast.LENGTH_SHORT).show();
                     }
                 }, error -> {
                     pDialog.dismiss();

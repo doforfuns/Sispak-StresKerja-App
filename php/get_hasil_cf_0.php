@@ -61,56 +61,29 @@ if (isset($input['hasil']) && isset($input['id_pengguna'])) {
     array_sort_by_column($hasil, 'nilai');
 
     $hasil_penyakit_id = $hasil[0]["id_penyakit"];
-    $nama_penyakit_terbesar = $hasil[0]["nama_penyakit"];
-    $hasil_nilai_terbesar = $hasil[0]["nilai"];
-
+    $nama_penyakit = $hasil[0]["nama_penyakit"];
+    $hasil_nilai = $hasil[0]["nilai"];
+    
+    $q = mysqli_query($con, "SELECT nama_penyakit FROM penyakit WHERE id_penyakit='$hasil_penyakit_id'");
+    $r = mysqli_fetch_array($q);
+    $nama_penyakit = $r['nama_penyakit'];
+    
     $response["hasil_terbesar"] = [
         "id_penyakit" => $hasil_penyakit_id,
-        "nama_penyakit" => $nama_penyakit_terbesar,
-        "nilai" => $hasil_nilai_terbesar
+        "nama_penyakit" => $nama_penyakit,
+        "nilai" => $hasil_nilai
     ];
-
+    
     $response["status"] = 0;
     $response["hasil_diagnosis"] = $hasil; // Seluruh daftar hasil diagnosis
 
-    $arr_all_penyakit = array();
-    foreach ($hasil as $hasil_penyakit) {
-        $id_penyakit = $hasil_penyakit["id_penyakit"];
-        $nama_penyakit = $hasil_penyakit["nama_penyakit"];
-        $nilai = $hasil_penyakit["nilai"];
-        $arr_all_penyakit[] = "#$nama_penyakit:$nilai\n";
-    }
-    $penyakit_values = implode($arr_all_penyakit);
-        
-    // Simpan data gejala yang dipilih dan nilai CF pengguna ke dalam variabel
-    $data_gejala = '';
-    foreach ($arr_hasil as $gejala) {
-        $id_gejala = $gejala['id_gejala'];
-        $cf_user = $gejala['cf_user'];
-        // Ubah query untuk mengambil kode_gejala dari tabel gejala berdasarkan id_gejala
-        $r_gejala = mysqli_fetch_array(mysqli_query($con, "SELECT kode_gejala FROM gejala WHERE id_gejala='$id_gejala'"));
-        $kode_gejala = $r_gejala['kode_gejala'];
-    
-        // Tambahkan kondisi untuk memeriksa apakah nilai CF dari pengguna tidak sama dengan 0
-        if ($cf_user != 0) {
-            $data_gejala .= "#{$kode_gejala}:{$cf_user}\n"; // Contoh format: "kode_gejala:cf_user #"
-        }
-    }
-    $data_gejala = rtrim($data_gejala, "#"); // Hilangkan karakter '#' di akhir string
-
-
-
-   // Simpan data riwayat ke dalam database
-    $q = "INSERT INTO riwayat (id_pengguna, id_penyakit, tanggal, metode, nilai, penyakit, gejala)
-        VALUES ('$id_pengguna', '$hasil_penyakit_id', '$tanggal', '$metode', '$hasil_nilai_terbesar', '$penyakit_values', '$data_gejala')";
+    $q = "INSERT INTO riwayat(id_pengguna, id_penyakit, tanggal, metode, nilai) VALUES ('" . $id_pengguna . "','" . $hasil_penyakit_id . "','" . $tanggal . "','" . $metode . "','" . $hasil_nilai . "')";
     mysqli_query($con, $q);
-    
+
     $response["status"] = 0;
     $response["id_penyakit"] = $hasil_penyakit_id;
-    $response["nama_penyakit"] = $nama_penyakit_terbesar;
-    $response["nilai"] = $hasil_nilai_terbesar;
-    $response["gejala_terpilih"] = $arr_hasil; // Tambahkan data gejala terpilih ke dalam response
-
+    $response["nama_penyakit"] = $nama_penyakit;
+    $response["nilai"] = $hasil_nilai;
 } else {
     $response["status"] = 2;
     $response["message"] = "Parameter ada yang kosong";
