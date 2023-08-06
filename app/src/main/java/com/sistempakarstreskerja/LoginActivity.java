@@ -1,14 +1,16 @@
 package com.sistempakarstreskerja;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.text.InputType;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,24 +40,9 @@ public class LoginActivity extends AppCompatActivity {
 
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
-        CheckBox checkBoxShowPassword = findViewById(R.id.checkBox_show_password);
 
         Button login = findViewById(R.id.btn_login);
         Button daftar = findViewById(R.id.btn_daftar);
-
-        // Kode CheckBox untuk menampilkan atau menyembunyikan sandi
-        checkBoxShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Tampilkan sandi
-                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    // Sembunyikan sandi
-                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-            }
-        });
 
         login.setOnClickListener(v -> {
             username = et_username.getText().toString().toLowerCase().trim();
@@ -73,18 +60,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
-        if (username.equals("")) {
+        TextView tvPasswordError = findViewById(R.id.tv_password_error);
+        tvPasswordError.setVisibility(View.GONE); // Sembunyikan TextView pesan kesalahan awalnya
+
+        if (username.isEmpty()) {
             et_username.setError("Username tidak boleh kosong");
             et_username.requestFocus();
             return false;
         }
-        if (password.equals("")) {
-            et_password.setError("Password tidak boleh kosong");
+
+        if (password.isEmpty()) {
+            tvPasswordError.setVisibility(View.VISIBLE); // Tampilkan TextView pesan kesalahan
+            tvPasswordError.setText("Password tidak boleh kosong");
             et_password.requestFocus();
             return false;
         }
+
         return true;
     }
+
 
     private void displayLoader() {
         pDialog = new ProgressDialog(LoginActivity.this);
@@ -133,6 +127,35 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
         MySingleton.getInstance(this).addToRequestQueue(jsArrayRequest);
+    }
+
+    // Metode ini akan dipanggil ketika TextView "forgot_password" diklik
+    public void showContactAdminPopup(View view) {
+        // Tampilkan AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Lupa Password?");
+        builder.setMessage("Anda dapat menghubungi admin untuk mengganti password.");
+        builder.setPositiveButton("Hubungi Admin", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                openWhatsApp("0811155298");
+            }
+        });
+        builder.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Biarkan kosong jika tidak ada tindakan khusus yang perlu dilakukan saat tombol "Batal" diklik.
+            }
+        });
+        builder.show();
+    }
+
+    // Metode untuk membuka WhatsApp dengan nomor tujuan tertentu
+    private void openWhatsApp(String phoneNumber) {
+        String url = "https://api.whatsapp.com/send?phone=" + phoneNumber;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
     }
 
 }

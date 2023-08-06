@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_id_penyakit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textColor="@color/blackPrimary"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:fontFamily="@font/mmedium"
+        tools:ignore="Suspicious0dp" />
+
+    <TextView
+        android:id="@+id/tv_nilai_cf"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textColor="@color/blackPrimary"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:fontFamily="@font/mmedium"
+        tools:ignore="Suspicious0dp" />
+
+    <TextView
+        android:id="@+id/tv_nama_penyakit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blackPrimary"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:fontFamily="@font/mmedium" />
+
+</LinearLayout>

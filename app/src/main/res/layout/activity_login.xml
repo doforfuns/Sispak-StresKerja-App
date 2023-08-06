@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bbackground"
+    android:background="@color/bgPrimary">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
     <View
         android:id="@id/view"
         android:layout_width="match_parent"
-        android:layout_height="233dp"
-        android:background="@drawable/bg_purple" />
+        android:layout_height="238dp"
+        android:background="@drawable/bg_purple"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -59,7 +65,8 @@
                 android:fontFamily="@font/mlight"
                 android:text="@string/username"
                 android:textColor="@color/grayPrimary"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:focusableInTouchMode="true" />
 
 
             <EditText
@@ -72,8 +79,10 @@
                 android:inputType="textPersonName"
                 android:lines="1"
                 android:paddingLeft="12dp"
-                android:textColor="@color/blackPrimary" />
-
+                android:drawableLeft="@drawable/user_icon"
+                android:drawableTint="@color/blackPrimary"
+                android:textColor="@color/blackPrimary"
+                android:focusableInTouchMode="true" />
 
         </LinearLayout>
 
@@ -93,27 +102,43 @@
                 android:fontFamily="@font/mlight"
                 android:text="@string/password"
                 android:textColor="@color/grayPrimary"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:focusableInTouchMode="true" />
 
-            <EditText
+            <com.xwray.passwordview.PasswordView
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/bg_input_edit"
                 android:fontFamily="@font/mmedium"
                 android:hint="@string/password"
-                android:inputType="textPassword"
                 android:lines="1"
                 android:paddingLeft="12dp"
-                android:textColor="@color/blackPrimary" />
+                android:paddingRight="12dp"
+                android:textColor="@color/blackPrimary"
+                android:focusableInTouchMode="true"
+                android:drawableLeft="@drawable/password"
+                android:drawableTint="@color/blackPrimary" />
 
-            <CheckBox
-                android:id="@+id/checkBox_show_password"
-                android:fontFamily="@font/mmedium"
+            <TextView
+                android:id="@+id/tv_password_error"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/view_password"
-                android:buttonTint="@color/blue" />
+                android:textColor="#F44336"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/forgot_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:fontFamily="@font/mmedium"
+                android:textSize="17sp"
+                android:paddingTop="12dp"
+                android:text="@string/forgot_password"
+                android:clickable="true"
+                android:onClick="showContactAdminPopup" />
 
         </LinearLayout>
 
@@ -176,10 +201,6 @@
 
     </LinearLayout>
 
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

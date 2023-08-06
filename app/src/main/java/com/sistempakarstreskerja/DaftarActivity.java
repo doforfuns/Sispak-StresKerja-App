@@ -3,8 +3,10 @@ package com.sistempakarstreskerja;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.text.InputType;
 import android.widget.CheckBox;
@@ -38,24 +40,24 @@ public class DaftarActivity extends AppCompatActivity {
         et_nama_lengkap = findViewById(R.id.et_nama_lengkap);
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
-        CheckBox checkBoxShowPassword = findViewById(R.id.checkBox_show_password);
+//        CheckBox checkBoxShowPassword = findViewById(R.id.checkBox_show_password);
 
         Button login = findViewById(R.id.btn_login);
         Button daftar = findViewById(R.id.btn_daftar);
 
         // Kode CheckBox untuk menampilkan atau menyembunyikan sandi
-        checkBoxShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Tampilkan sandi
-                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    // Sembunyikan sandi
-                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
-            }
-        });
+//        checkBoxShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    // Tampilkan sandi
+//                    et_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+//                } else {
+//                    // Sembunyikan sandi
+//                    et_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//                }
+//            }
+//        });
 
         daftar.setOnClickListener(v -> {
             nama_lengkap = et_nama_lengkap.getText().toString().trim();
@@ -74,6 +76,9 @@ public class DaftarActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
+        TextView tvPasswordError = findViewById(R.id.tv_password_error);
+        tvPasswordError.setVisibility(View.GONE); // Sembunyikan TextView pesan kesalahan awalnya
+
         if (nama_lengkap.equals("")) {
             et_nama_lengkap.setError("Nama Lengkap tidak boleh kosong");
             et_nama_lengkap.requestFocus();
@@ -84,8 +89,9 @@ public class DaftarActivity extends AppCompatActivity {
             et_username.requestFocus();
             return false;
         }
-        if (password.equals("")) {
-            et_password.setError("Password tidak boleh kosong");
+        if (password.isEmpty()) {
+            tvPasswordError.setVisibility(View.VISIBLE); // Tampilkan TextView pesan kesalahan
+            tvPasswordError.setText("Password tidak boleh kosong");
             et_password.requestFocus();
             return false;
         }

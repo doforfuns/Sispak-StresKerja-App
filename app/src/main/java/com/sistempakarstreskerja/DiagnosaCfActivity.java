@@ -70,18 +70,19 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         switch (value) {
             case "Tidak":
                 return 0;
-            case "Tidak tahu":
+            case "Tidak Tahu":
                 return 0.2;
-            case "Sedikit yakin":
+            case "Sedikit Yakin":
                 return 0.4;
-            case "Cukup yakin":
+            case "Cukup Yakin":
                 return 0.6;
             case "Yakin":
                 return 0.8;
-            case "Sangat yakin":
+            case "Sangat Yakin":
                 return 1;
+            default:
+                return 0; // Default value jika tidak ada nilai yang sesuai
         }
-        return 0;
     }
 
     private void showPertanyaan(int index) {

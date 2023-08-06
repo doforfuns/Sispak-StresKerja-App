@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgPrimary"
+    android:background="@color/bgPrimary">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".AdminActivity">
 
     <View
@@ -85,6 +90,10 @@
             android:layout_marginBottom="16dp"
             android:background="#EDEDED" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,6 +155,23 @@
                     android:fontFamily="@font/mmedium"
                     android:text="@string/data_aturan"
                     android:textAlignment="center"
+                    android:textColor="@color/blackPrimary"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    app:backgroundTint="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_riwayat"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="40dp"
+                    android:gravity="center|center_vertical"
+                    android:background="@drawable/bg_btn_white_primary"
+                    android:drawableLeft="@drawable/ic_rw"
+                    android:fontFamily="@font/mmedium"
+                    android:text="@string/riwayat"
                     android:textColor="@color/blackPrimary"
                     android:textAppearance="?android:textAppearanceMedium"
                     app:backgroundTint="@color/white" />
@@ -215,6 +241,10 @@
 
         </LinearLayout>
 
+        </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

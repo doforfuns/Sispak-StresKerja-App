@@ -14,6 +14,7 @@ import com.sistempakarstreskerja.admin.PenggunaActivity;
 import com.sistempakarstreskerja.admin.GejalaActivity;
 import com.sistempakarstreskerja.admin.PenyakitActivity;
 import com.sistempakarstreskerja.admin.PanduanAdminActivity;
+import com.sistempakarstreskerja.admin.RiwayatActivityAdmin;
 
 import static android.R.drawable.ic_dialog_alert;
 
@@ -34,6 +35,7 @@ public class AdminActivity extends AppCompatActivity {
         Button btn_penyakit = findViewById(R.id.btn_penyakit);
         Button btn_data_pengguna = findViewById(R.id.btn_data_pengguna);
         Button btn_aturan = findViewById(R.id.btn_aturan);
+        Button btn_riwayat = findViewById(R.id.btn_riwayat);
         Button btn_panduan =  findViewById(R.id.btn_panduan);
         Button btn_logout = findViewById(R.id.btn_logout);
 
@@ -58,6 +60,11 @@ public class AdminActivity extends AppCompatActivity {
             Intent intent = new Intent(AdminActivity.this, AturanActivity.class);
             startActivity(intent);
 
+        });
+
+        btn_riwayat.setOnClickListener(view -> {
+            Intent intent = new Intent(AdminActivity.this, RiwayatActivityAdmin.class);
+            startActivity(intent);
         });
 
         btn_panduan.setOnClickListener(view -> {

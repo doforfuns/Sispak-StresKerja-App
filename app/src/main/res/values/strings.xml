@@ -13,7 +13,7 @@
     <string name="daftar_penyakit">Daftar Diagnosa</string>
     <string name="daftar_pengguna">Data Pengguna</string>
     <string name="getstarted">Ayo Cek Tingkat Stres Kamu</string>
-    <string name="view_password">Tampilkan Password</string>
+    <string name="forgot_password">Forgot Password?</string>
 
 
     <string name="metode_forward_chaining">Metode Forward Chaining</string>
@@ -38,7 +38,7 @@
     <string name="ya">Ya</string>
     <string name="tidak">Tidak</string>
     <string name="tidak_ada_riwayat_diagnosa">Tidak ada riwayat diagnosa</string>
-    <string name="text_hasil_diagnosa_nama_penyakit">Berdasarkan gejala terpilih, kemungkinan terkena penyakit</string>
+    <string name="text_hasil_diagnosa_nama_penyakit">Berdasarkan gejala terpilih, kemungkinan anda mengalami</string>
     <string name="forward_chaining">Forward Chaining</string>
     <string name="lanjut">Lanjut</string>
     <string name="tidak_tahu">Tidak Tahu</string>
@@ -57,14 +57,16 @@
     <string name="certainly_factor">Certainly Factor</string>
     <string name="selamat_datang_user">Yuk Cek Tingkat Stres Kamu Disini</string>
     <string name="hasil_diagnosa">Hasil Diagnosa</string>
-    <string name="penyakit">Penyakit</string>
-    <string name="penyakit_nama">Nama Penyakit</string>
+    <string name="penyakit">Diagnosa</string>
+    <string name="penyakit_nama">Nama Diagnosa</string>
 
     <string name="logout">Logout</string>
     <string name="panduan_admin">Panduan Aplikasi</string>
     <string name="informasi_user">Panduan User</string>
     <string name="informasi_admin">Info Admin</string>
     <string name="Dashboard">Kembali ke Dashboard</string>
+    <string name="lihat_hasil_lainnya">Diagnosa Pembanding</string>
+    <string name="riwayat">Data Riwayat</string>
 
     <string-array name="pilihan_jawaban">
         <item>Tidak</item>
