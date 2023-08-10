@@ -67,7 +67,7 @@
                     android:backgroundTint="@color/bluePrimary"
                     android:buttonTint="@color/bluePrimary"
                     android:fontFamily="@font/mmedium"
-                    android:text="@string/tidak"
+                    android:text="@string/pasti"
                     android:textColor="@color/grayPrimary"
                     android:textSize="16sp" />
 
@@ -78,7 +78,7 @@
                     android:backgroundTint="@color/bluePrimary"
                     android:buttonTint="@color/bluePrimary"
                     android:fontFamily="@font/mmedium"
-                    android:text="@string/tidak_tahu"
+                    android:text="@string/hampir_pasti"
                     android:textColor="@color/grayPrimary"
                     android:textSize="16sp" />
 
@@ -89,7 +89,7 @@
                     android:backgroundTint="@color/bluePrimary"
                     android:buttonTint="@color/bluePrimary"
                     android:fontFamily="@font/mmedium"
-                    android:text="@string/sedikit_yakin"
+                    android:text="@string/kemungkinan_besar"
                     android:textColor="@color/grayPrimary"
                     android:textSize="16sp" />
 
@@ -100,7 +100,7 @@
                     android:backgroundTint="@color/bluePrimary"
                     android:buttonTint="@color/bluePrimary"
                     android:fontFamily="@font/mmedium"
-                    android:text="@string/cukup_yakin"
+                    android:text="@string/mungkin"
                     android:textColor="@color/grayPrimary"
                     android:textSize="16sp" />
 
@@ -111,7 +111,7 @@
                     android:backgroundTint="@color/bluePrimary"
                     android:buttonTint="@color/bluePrimary"
                     android:fontFamily="@font/mmedium"
-                    android:text="@string/yakin"
+                    android:text="@string/tidak_tahu"
                     android:textColor="@color/grayPrimary"
                     android:textSize="16sp" />
 
@@ -122,7 +122,43 @@
                     android:backgroundTint="@color/bluePrimary"
                     android:buttonTint="@color/bluePrimary"
                     android:fontFamily="@font/mmedium"
-                    android:text="@string/sangat_yakin"
+                    android:text="@string/mungkin_tidak"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="16sp"
+                    android:value="1"/>
+
+                <RadioButton
+                    android:id="@+id/rb_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/bluePrimary"
+                    android:buttonTint="@color/bluePrimary"
+                    android:fontFamily="@font/mmedium"
+                    android:text="@string/kemungkinan_besar_tidak"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="16sp"
+                    android:value="1"/>
+
+                <RadioButton
+                    android:id="@+id/rb_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/bluePrimary"
+                    android:buttonTint="@color/bluePrimary"
+                    android:fontFamily="@font/mmedium"
+                    android:text="@string/hampir_pasti_tidak"
+                    android:textColor="@color/grayPrimary"
+                    android:textSize="16sp"
+                    android:value="1"/>
+
+                <RadioButton
+                    android:id="@+id/rb_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/bluePrimary"
+                    android:buttonTint="@color/bluePrimary"
+                    android:fontFamily="@font/mmedium"
+                    android:text="@string/pasti_tidak"
                     android:textColor="@color/grayPrimary"
                     android:textSize="16sp"
                     android:value="1"/>

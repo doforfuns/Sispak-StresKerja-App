@@ -68,18 +68,24 @@ public class DiagnosaCfActivity extends AppCompatActivity {
 
     private double konversiJawaban(String value) {
         switch (value) {
-            case "Tidak":
-                return 0;
+            case "Pasti":
+                return 1;
+            case "Hampir Pasti":
+                return 0.8;
+            case "Kemungkinan Besar":
+                return 0.6;
+            case "Mungkin":
+                return 0.4;
             case "Tidak Tahu":
                 return 0.2;
-            case "Sedikit Yakin":
-                return 0.4;
-            case "Cukup Yakin":
-                return 0.6;
-            case "Yakin":
-                return 0.8;
-            case "Sangat Yakin":
-                return 1;
+            case "Mungkin Tidak":
+                return -0.4;
+            case "Kemungkinan Besar Tidak":
+                return -0.6;
+            case "Hampir Pasti Tidak":
+                return -0.8;
+            case "Pasti Tidak":
+                return -1;
             default:
                 return 0; // Default value jika tidak ada nilai yang sesuai
         }

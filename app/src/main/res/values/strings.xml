@@ -14,13 +14,10 @@
     <string name="daftar_pengguna">Data Pengguna</string>
     <string name="getstarted">Ayo Cek Tingkat Stres Kamu</string>
     <string name="forgot_password">Forgot Password?</string>
-
-
     <string name="metode_forward_chaining">Metode Forward Chaining</string>
     <string name="metode_certainty_factor">Metode Certainty Factor</string>
     <string name="diagnosa_cepat">Diagnosa Cepat</string>
     <string name="diagnosa_akurat">Mulai Diagnosa </string>
-
     <string name="data_penyakit">Data Diagnosa</string>
     <string name="data_aturan">Data Aturan</string>
     <string name="kode_gejala">Kode Gejala</string>
@@ -36,17 +33,11 @@
     <string name="tidak_ada_gejala">Tidak ada gejala</string>
     <string name="atur_ulang_gejala">Atur Ulang Gejala</string>
     <string name="ya">Ya</string>
-    <string name="tidak">Tidak</string>
     <string name="tidak_ada_riwayat_diagnosa">Tidak ada riwayat diagnosa</string>
     <string name="text_hasil_diagnosa_nama_penyakit">Berdasarkan gejala terpilih, kemungkinan anda mengalami</string>
     <string name="forward_chaining">Forward Chaining</string>
     <string name="lanjut">Lanjut</string>
-    <string name="tidak_tahu">Tidak Tahu</string>
-    <string name="sedikit_yakin">Sedikit Yakin</string>
-    <string name="cukup_yakin">Cukup Yakin</string>
     <string name="id_pengguna">ID Pengguna</string>
-    <string name="yakin">Yakin</string>
-    <string name="sangat_yakin">Sangat Yakin</string>
     <string name="my_dashboard">Dashboard</string>
     <string name="my_dashboard_user">User Dashboard</string>
     <string name="my_dashboard_admin">Admin Dashboard</string>
@@ -59,7 +50,6 @@
     <string name="hasil_diagnosa">Hasil Diagnosa</string>
     <string name="penyakit">Diagnosa</string>
     <string name="penyakit_nama">Nama Diagnosa</string>
-
     <string name="logout">Logout</string>
     <string name="panduan_admin">Panduan Aplikasi</string>
     <string name="informasi_user">Panduan User</string>
@@ -68,7 +58,6 @@
     <string name="lihat_hasil_lainnya">Diagnosa Pembanding</string>
     <string name="riwayat">Data Riwayat</string>
     <string name="gejala_terpilih">Gejala Yang dipilih</string>
-
     <string-array name="pilihan_jawaban">
         <item>Tidak</item>
         <item>Tidak tahu</item>
@@ -77,5 +66,14 @@
         <item>Yakin</item>
         <item>Sangat yakin</item>
     </string-array>
-
+    <string name="pasti_tidak">Pasti Tidak</string>
+    <string name="hampir_pasti_tidak">Hampir Pasti Tidak</string>
+    <string name="kemungkinan_besar_tidak">Kemungkinan Besar Tidak</string>
+    <string name="mungkin_tidak">Mungkin Tidak</string>
+    <string name="tidak_tahu">Tidak Tahu</string>
+    <string name="mungkin">Mungkin</string>
+    <string name="kemungkinan_besar">Kemungkinan Besar</string>
+    <string name="hampir_pasti">Hampir Pasti</string>
+    <string name="pasti">Pasti</string>
+    <string name="tidak">tidak</string>
 </resources>
