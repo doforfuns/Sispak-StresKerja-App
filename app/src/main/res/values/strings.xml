@@ -58,13 +58,16 @@
     <string name="lihat_hasil_lainnya">Diagnosa Pembanding</string>
     <string name="riwayat">Data Riwayat</string>
     <string name="gejala_terpilih">Gejala Yang dipilih</string>
-    <string-array name="pilihan_jawaban">
-        <item>Tidak</item>
-        <item>Tidak tahu</item>
-        <item>Sedikit yakin</item>
-        <item>Cukup yakin</item>
-        <item>Yakin</item>
-        <item>Sangat yakin</item>
+    <string-array name="gejala_options">
+        <item>Pasti</item>
+        <item>Hampir Pasti</item>
+        <item>Kemungkinan Besar</item>
+        <item>Mungkin</item>
+        <item>Tidak Tahu</item>
+        <item>Mungkin Tidak</item>
+        <item>Kemungkinan Besar Tidak</item>
+        <item>Hampir Pasti Tidak</item>
+        <item>Pasti Tidak</item>
     </string-array>
     <string name="pasti_tidak">Pasti Tidak</string>
     <string name="hampir_pasti_tidak">Hampir Pasti Tidak</string>
@@ -76,4 +79,5 @@
     <string name="hampir_pasti">Hampir Pasti</string>
     <string name="pasti">Pasti</string>
     <string name="tidak">tidak</string>
+    <string name="hint">Jawab</string>
 </resources>

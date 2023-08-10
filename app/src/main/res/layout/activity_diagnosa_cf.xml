@@ -53,117 +53,27 @@
             android:layout_marginRight="24dp"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/rg"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                style="@style/RadioGroupWithBox">
-
-                <RadioButton
-                    android:id="@+id/rb_1"
+                android:hint="@string/hint">
+                <AutoCompleteTextView
+                    android:id="@+id/spinner_gejala"
+                    android:fontFamily="@font/mmedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/pasti"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp" />
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <RadioButton
-                    android:id="@+id/rb_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/hampir_pasti"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/rb_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/kemungkinan_besar"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/rb_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/mungkin"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/rb_5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/tidak_tahu"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp" />
-
-                <RadioButton
-                    android:id="@+id/rb_6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/mungkin_tidak"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp"
-                    android:value="1"/>
-
-                <RadioButton
-                    android:id="@+id/rb_7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/kemungkinan_besar_tidak"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp"
-                    android:value="1"/>
-
-                <RadioButton
-                    android:id="@+id/rb_8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/hampir_pasti_tidak"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp"
-                    android:value="1"/>
-
-                <RadioButton
-                    android:id="@+id/rb_9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/bluePrimary"
-                    android:buttonTint="@color/bluePrimary"
-                    android:fontFamily="@font/mmedium"
-                    android:text="@string/pasti_tidak"
-                    android:textColor="@color/grayPrimary"
-                    android:textSize="16sp"
-                    android:value="1"/>
-
-            </RadioGroup>
+<!--            <Spinner-->
+<!--                android:id="@+id/spinner_gejala"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:backgroundTint="@color/bluePrimary"-->
+<!--                android:fontFamily="@font/mmedium"-->
+<!--                android:textColor="@color/grayPrimary"-->
+<!--                android:textSize="16sp" />-->
 
             <Button
                 android:id="@+id/btn_lanjut"
