@@ -59,15 +59,15 @@
     <string name="riwayat">Data Riwayat</string>
     <string name="gejala_terpilih">Gejala Yang dipilih</string>
     <string-array name="gejala_options">
-        <item>Pasti</item>
-        <item>Hampir Pasti</item>
-        <item>Kemungkinan Besar</item>
-        <item>Mungkin</item>
-        <item>Tidak Tahu</item>
-        <item>Mungkin Tidak</item>
-        <item>Kemungkinan Besar Tidak</item>
-        <item>Hampir Pasti Tidak</item>
-        <item>Pasti Tidak</item>
+        <item>Pasti (1)</item>
+        <item>Hampir Pasti (0.8)</item>
+        <item>Kemungkinan Besar (0.6)</item>
+        <item>Mungkin (0.4)</item>
+        <item>Tidak Tahu (0.2)</item>
+        <item>Mungkin Tidak (-0.4)</item>
+        <item>Kemungkinan Besar Tidak (-0.6)</item>
+        <item>Hampir Pasti Tidak (-0.8)</item>
+        <item>Pasti Tidak (-1)</item>
     </string-array>
     <string name="pasti_tidak">Pasti Tidak</string>
     <string name="hampir_pasti_tidak">Hampir Pasti Tidak</string>

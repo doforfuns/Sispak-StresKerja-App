@@ -34,6 +34,7 @@ public class DiagnosaCfActivity extends AppCompatActivity {
     private ArrayList<HashMap<String, String>> list;
     private ArrayList<Double> hasil;
     private TextView text_pertanyaan;
+    private TextView kode;
     private MaterialAutoCompleteTextView spinnerGejala;
     private int counter;
     private final int REQUEST_CODE = 1234;
@@ -50,6 +51,7 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         getData();
 
         text_pertanyaan = findViewById(R.id.text_pertanyaan);
+        kode = findViewById(R.id.kode);
         spinnerGejala = findViewById(R.id.spinner_gejala);
 
         // Set up the adapter for the AutoCompleteTextView
@@ -125,6 +127,7 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         } else {
             HashMap<String, String> item = list.get(index);
             text_pertanyaan.setText("Apakah " + item.get("nama_gejala").toLowerCase() + "?");
+            kode.setText(item.get("kode_gejala"));
             // Set Spinner back to default
             setSpinnerToDefault();
             spinnerGejala.setText("Pilih Jawaban", false); // Set default text for the spinner
@@ -163,6 +166,7 @@ public class DiagnosaCfActivity extends AppCompatActivity {
                                 HashMap<String, String> map = new HashMap<>();
                                 map.put("id_gejala", jsonObject.getString("id_gejala"));
                                 map.put("nama_gejala", jsonObject.getString("nama_gejala"));
+                                map.put("kode_gejala", jsonObject.getString("kode_gejala"));
                                 list.add(map);
                                 kosong = false;
                             }
