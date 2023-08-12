@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -200,6 +202,9 @@ public class PenggunaEditActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
+        TextView tvPasswordError = findViewById(R.id.tv_password_error);
+        tvPasswordError.setVisibility(View.GONE); // Sembunyikan TextView pesan kesalahan awalnya
+
         if (id_pengguna.equals("")) {
             et_id_pengguna.setError("id Pengguna tidak boleh kosong");
             et_id_pengguna.requestFocus();
@@ -213,6 +218,12 @@ public class PenggunaEditActivity extends AppCompatActivity {
         if (username.equals("")) {
             et_username.setError("username tidak boleh kosong");
             et_username.requestFocus();
+            return false;
+        }
+        if (password.isEmpty()) {
+            tvPasswordError.setVisibility(View.VISIBLE); // Tampilkan TextView pesan kesalahan
+            tvPasswordError.setText("Password tidak boleh kosong");
+            et_password.requestFocus();
             return false;
         }
 

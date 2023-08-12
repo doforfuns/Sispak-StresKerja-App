@@ -3,8 +3,10 @@ package com.sistempakarstreskerja.admin;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -97,6 +99,8 @@ public class PenggunaTambahActivity extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
+        TextView tvPasswordError = findViewById(R.id.tv_password_error);
+        tvPasswordError.setVisibility(View.GONE); // Sembunyikan TextView pesan kesalahan awalnya
 
         if (nama_lengkap.equals("")) {
             et_nama_lengkap.setError("Nama lengkap tidak boleh kosong");
@@ -108,8 +112,9 @@ public class PenggunaTambahActivity extends AppCompatActivity {
             et_username.requestFocus();
             return false;
         }
-        if (password.equals("")) {
-            et_password.setError("password tidak boleh kosong");
+        if (password.isEmpty()) {
+            tvPasswordError.setVisibility(View.VISIBLE); // Tampilkan TextView pesan kesalahan
+            tvPasswordError.setText("Password tidak boleh kosong");
             et_password.requestFocus();
             return false;
         }

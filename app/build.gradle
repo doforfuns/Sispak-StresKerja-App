@@ -38,6 +38,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'org.greenrobot:eventbus:3.2.0'
     compile 'com.xwray:passwordview:1.0'
+    implementation 'com.airbnb.android:lottie:4.1.0'
+
 
 
 //    implementation 'dev.dworks.libs:volleyplus:0.1.4'

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,12 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.sistempakarstreskerja.PenyakitDetailActivity;
-import com.sistempakarstreskerja.admin.PenyakitEditActivity;
-import com.sistempakarstreskerja.admin.PenyakitTambahActivity;
-import com.sistempakarstreskerja.MySingleton;
-import com.sistempakarstreskerja.R;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

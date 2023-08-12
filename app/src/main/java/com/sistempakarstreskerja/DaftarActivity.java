@@ -8,9 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.text.InputType;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 

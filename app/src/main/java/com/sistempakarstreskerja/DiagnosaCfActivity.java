@@ -3,9 +3,9 @@ package com.sistempakarstreskerja;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -33,11 +33,11 @@ public class DiagnosaCfActivity extends AppCompatActivity {
     private static final String url = "https://streskerja.000webhostapp.com/get_gejala_cf.php";
     private ArrayList<HashMap<String, String>> list;
     private ArrayList<Double> hasil;
-    private TextView text_pertanyaan;
-    private TextView kode;
     private MaterialAutoCompleteTextView spinnerGejala;
     private int counter;
     private final int REQUEST_CODE = 1234;
+    private RecyclerView recyclerView;
+    private DiagnosaCFAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,65 +48,56 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         // Tampilkan peringatan
         showAlertDialog();
 
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Add DividerItemDecoration to show dividers between items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         getData();
-
-        text_pertanyaan = findViewById(R.id.text_pertanyaan);
-        kode = findViewById(R.id.kode);
-        spinnerGejala = findViewById(R.id.spinner_gejala);
-
-        // Set up the adapter for the AutoCompleteTextView
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.gejala_options, R.layout.dropdown_item_diagnosa);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerGejala.setAdapter(adapter);
-
-        spinnerGejala.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (view != null) {
-                    TextView textOption = view.findViewById(R.id.text_option);
-                    String selectedValue = parent.getItemAtPosition(position).toString();
-                    textOption.setText(selectedValue);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Do nothing
-            }
-        });
-
-        // Set default selection to "Pilih"
-        spinnerGejala.setText("Pilih Jawaban", false);
 
         Button btn_lanjut = findViewById(R.id.btn_lanjut);
 
         btn_lanjut.setOnClickListener(view -> {
-            String selectedValue = spinnerGejala.getText().toString();
-            hasil.add(konversiJawaban(selectedValue));
-            showPertanyaan(++counter);
+            if (counter < list.size() - 1) {
+                // Pertanyaan belum mencapai akhir, lanjutkan pertanyaan berikutnya
+                String selectedValue = adapter.getSelectedAnswer(counter);
+                hasil.add(konversiJawaban(selectedValue));
+                counter++;
+                showPertanyaan(counter);
+            } else {
+                // Pertanyaan sudah mencapai akhir, tampilkan hasil
+                Intent intent = new Intent(getApplicationContext(), DiagnosaCfHasilActivity.class);
+                intent.putExtra("hasil", android.text.TextUtils.join("#", hasil));
+                startActivityForResult(intent, REQUEST_CODE);
+            }
         });
+
     }
 
     private double konversiJawaban(String value) {
+        if (value == null) {
+            return 0; // Atau nilai default sesuai kebutuhan Anda
+        }
         switch (value) {
-            case "Pasti":
+            case "Pasti (1)":
                 return 1;
-            case "Hampir Pasti":
+            case "Hampir Pasti (0.8)":
                 return 0.8;
-            case "Kemungkinan Besar":
+            case "Kemungkinan Besar (0.6)":
                 return 0.6;
-            case "Mungkin":
+            case "Mungkin (0.4)":
                 return 0.4;
-            case "Tidak Tahu":
+            case "Tidak Tahu (0.2)":
                 return 0.2;
-            case "Mungkin Tidak":
+            case "Mungkin Tidak (-0.4)":
                 return -0.4;
-            case "Kemungkinan Besar Tidak":
+            case "Kemungkinan Besar Tidak (-0.6)":
                 return -0.6;
-            case "Hampir Pasti Tidak":
+            case "Hampir Pasti Tidak (-0.8)":
                 return -0.8;
-            case "Pasti Tidak":
+            case "Pasti Tidak (-1)":
                 return -1;
             default:
                 return 0; // Default value jika tidak ada nilai yang sesuai
@@ -122,15 +113,8 @@ public class DiagnosaCfActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), DiagnosaCfHasilActivity.class);
             intent.putExtra("hasil", android.text.TextUtils.join("#", hasil));
             startActivityForResult(intent, REQUEST_CODE);
-            // Set Spinner back to default
-            setSpinnerToDefault();
         } else {
             HashMap<String, String> item = list.get(index);
-            text_pertanyaan.setText("Apakah " + item.get("nama_gejala").toLowerCase() + "?");
-            kode.setText(item.get("kode_gejala"));
-            // Set Spinner back to default
-            setSpinnerToDefault();
-            spinnerGejala.setText("Pilih Jawaban", false); // Set default text for the spinner
         }
     }
 
@@ -151,6 +135,19 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         pDialog.show();
     }
 
+    private ArrayList<Gejala> convertToGejalaList(ArrayList<HashMap<String, String>> inputList) {
+        ArrayList<Gejala> gejalaList = new ArrayList<>();
+        for (HashMap<String, String> gejalaData : inputList) {
+            Gejala gejala = new Gejala(
+                    gejalaData.get("kode_gejala"),
+                    gejalaData.get("nama_gejala"),
+                    gejalaData.get("selected_answer")
+            );
+            gejalaList.add(gejala);
+        }
+        return gejalaList;
+    }
+
     private void getData() {
         displayLoader();
         JsonObjectRequest jsArrayRequest = new JsonObjectRequest
@@ -167,9 +164,14 @@ public class DiagnosaCfActivity extends AppCompatActivity {
                                 map.put("id_gejala", jsonObject.getString("id_gejala"));
                                 map.put("nama_gejala", jsonObject.getString("nama_gejala"));
                                 map.put("kode_gejala", jsonObject.getString("kode_gejala"));
+                                map.put("selected_answer", "Pilih Jawaban"); // Tambahkan nilai default untuk selected_answer
                                 list.add(map);
                                 kosong = false;
                             }
+
+                            ArrayList<Gejala> gejalaList = convertToGejalaList(list);
+                            adapter = new DiagnosaCFAdapter(gejalaList, DiagnosaCfActivity.this);
+                            recyclerView.setAdapter(adapter);
 
                             if (kosong) {
                                 Toast.makeText(DiagnosaCfActivity.this, "Tidak ada data gejala", Toast.LENGTH_SHORT).show();

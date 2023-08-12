@@ -6,8 +6,9 @@
     android:layout_height="wrap_content"
     android:ellipsize="end"
     android:maxLines="1"
-    android:padding="16dp"
-    android:fontFamily="@font/mmedium"
+    android:padding="15dp"
+    android:fontFamily="@font/mregular"
+    android:textColor="@color/black"
     android:textSize="17sp"
     android:textAppearance="?attr/textAppearanceSubtitle1" />
 

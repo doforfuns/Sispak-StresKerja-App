@@ -21,43 +21,10 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/bg_layout_white"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-        <TextView
-            android:id="@+id/kode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="center"
-            android:text="@string/kode_gejala"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:lineSpacingExtra="8dp" />
-
-        <TextView
-            android:id="@+id/text_pertanyaan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/mmedium"
-            android:gravity="center"
-            android:text="@string/nama_gejala"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:lineSpacingExtra="8dp" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,25 +35,12 @@
             android:layout_marginRight="24dp"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/hint">
-                <AutoCompleteTextView
-                    android:id="@+id/spinner_gejala"
-                    android:fontFamily="@font/mmedium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
                 android:id="@+id/btn_lanjut"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/bg_btn_blue_primary"
                 android:fontFamily="@font/mmedium"
@@ -96,6 +50,15 @@
                 app:backgroundTint="@color/bluePrimary" />
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:divider="@color/black"
+            android:dividerHeight="0.5dp"
+            android:fontFamily="@font/mmedium"/>
 
     </LinearLayout>
 
