@@ -12,6 +12,7 @@ while ($r = mysqli_fetch_array($q)) {
     $gejala = array();
     $gejala["id_gejala"] = $r['id_gejala'];
     $gejala["nama_gejala"] = $r['nama_gejala'];
+    $gejala["kode_gejala"] = $r['kode_gejala'];
     array_push($response["gejala"], $gejala);
 }
 $response["status"] = 0;

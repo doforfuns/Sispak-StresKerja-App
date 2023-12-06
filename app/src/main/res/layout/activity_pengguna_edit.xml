@@ -44,6 +44,53 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:fontFamily="@font/mlight"
+                android:text="@string/nik"
+                android:textColor="@color/grayPrimary"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_id_pengguna"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_view_circle_picture"
+                android:fontFamily="@font/mmedium"
+                android:lines="1"
+                android:paddingLeft="12dp"
+                android:hint="@string/penyakit_nama"
+                android:inputType="textPersonName"
+                android:textColor="@color/blackPrimary"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+<!--            <EditText-->
+<!--                android:id="@+id/et_id_pengguna"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:background="@drawable/bg_input_edit"-->
+<!--                android:fontFamily="@font/mmedium"-->
+<!--                android:lines="1"-->
+<!--                android:paddingLeft="12dp"-->
+<!--                android:hint="@string/nik"-->
+<!--                android:inputType="textPersonName"-->
+<!--                android:textColor="@color/blackPrimary" />-->
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="24dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:fontFamily="@font/mlight"
                 android:text="@string/nama_lengkap"
                 android:textColor="@color/grayPrimary"
                 android:textSize="20sp" />
@@ -55,10 +102,10 @@
                 android:layout_height="50dp"
                 android:background="@drawable/bg_input_edit"
                 android:fontFamily="@font/mmedium"
-                android:lines="1"
-                android:paddingLeft="12dp"
                 android:hint="@string/nama_lengkap"
                 android:inputType="textPersonName"
+                android:lines="1"
+                android:paddingLeft="12dp"
                 android:textColor="@color/blackPrimary" />
 
 
@@ -153,31 +200,31 @@
             android:textSize="20sp"
             app:backgroundTint="@color/bluePrimary" />
 
-        <EditText
-            android:id="@+id/et_id_pengguna"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="0dp"
-            android:background="@color/white"
-            android:inputType="text"
-            android:padding="10dp"
-            android:visibility="invisible" />
+<!--        <EditText-->
+<!--            android:id="@+id/et_id_pengguna"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_margin="0dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:inputType="text"-->
+<!--            android:padding="10dp"-->
+<!--            android:visibility="invisible" />-->
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="0dp"
-            android:text="@string/id_pengguna"
-            android:textColor="@color/white"
-            android:visibility="invisible" />
+<!--        <TextView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_margin="0dp"-->
+<!--            android:text="@string/id_pengguna"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:visibility="invisible" />-->
 
-        <View
-            android:id="@+id/bg_top_header"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+<!--        <View-->
+<!--            android:id="@+id/bg_top_header"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     </LinearLayout>
 

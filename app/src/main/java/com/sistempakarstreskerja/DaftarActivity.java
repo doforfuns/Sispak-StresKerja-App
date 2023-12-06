@@ -1,5 +1,6 @@
 package com.sistempakarstreskerja;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,19 +22,23 @@ public class DaftarActivity extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     public static final String url = "https://streskerja.000webhostapp.com/daftar.php";
+    private EditText et_id_pengguna;
     private EditText et_nama_lengkap;
     private EditText et_username;
     private EditText et_password;
+    private String id_pengguna;
     private String nama_lengkap;
     private String username;
     private String password;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar);
         setTitle("Daftar User");
 
+        et_id_pengguna = findViewById(R.id.et_id_pengguna);
         et_nama_lengkap = findViewById(R.id.et_nama_lengkap);
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
@@ -57,6 +62,7 @@ public class DaftarActivity extends AppCompatActivity {
 //        });
 
         daftar.setOnClickListener(v -> {
+            id_pengguna = et_id_pengguna.getText().toString().trim();
             nama_lengkap = et_nama_lengkap.getText().toString().trim();
             username = et_username.getText().toString().toLowerCase().trim();
             password = et_password.getText().toString().trim();
@@ -76,6 +82,11 @@ public class DaftarActivity extends AppCompatActivity {
         TextView tvPasswordError = findViewById(R.id.tv_password_error);
         tvPasswordError.setVisibility(View.GONE); // Sembunyikan TextView pesan kesalahan awalnya
 
+        if (id_pengguna.equals("")) {
+            et_id_pengguna.setError("NIK tidak boleh kosong");
+            et_id_pengguna.requestFocus();
+            return false;
+        }
         if (nama_lengkap.equals("")) {
             et_nama_lengkap.setError("Nama Lengkap tidak boleh kosong");
             et_nama_lengkap.requestFocus();
@@ -107,6 +118,7 @@ public class DaftarActivity extends AppCompatActivity {
         displayLoader();
         JSONObject request = new JSONObject();
         try {
+            request.put("id_pengguna", id_pengguna);
             request.put("nama_lengkap", nama_lengkap);
             request.put("username", username);
             request.put("password", password);

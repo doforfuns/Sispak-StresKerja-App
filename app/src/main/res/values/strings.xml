@@ -2,6 +2,7 @@
     <string name="app_name">Sistem Pakar Stres Kerja</string>
     <string name="app_name_full">Sistem Pakar Diagnosa\nStres Kerja Karyawan</string>
     <string name="username">Username</string>
+    <string name="nik">Nomor Induk Karyawan</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="belum_punya_akun">Belum punya akun?</string>

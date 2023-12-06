@@ -9,7 +9,7 @@ if (isset($input['id_pengguna'])) {
 
     $id_pengguna = $input['id_pengguna'];
 
-    $q = mysqli_query($con, "SELECT id_pengguna,nama_lengkap,username FROM pengguna WHERE id_pengguna='$id_pengguna'");
+    $q = mysqli_query($con, "SELECT id_pengguna,nama_lengkap,username,password FROM pengguna WHERE id_pengguna='$id_pengguna'");
     $r = mysqli_fetch_array($q);
 
     $response["status"] = 0;
@@ -17,6 +17,7 @@ if (isset($input['id_pengguna'])) {
     $response["id_pengguna"] = $r['id_pengguna'];
     $response["nama_lengkap"] = $r['nama_lengkap'];
     $response["username"] = $r['username'];
+    $response["password"] = $r['password'];
 
     
 } else {

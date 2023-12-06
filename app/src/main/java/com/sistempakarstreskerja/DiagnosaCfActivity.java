@@ -12,11 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -25,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 public class DiagnosaCfActivity extends AppCompatActivity {
@@ -57,24 +53,23 @@ public class DiagnosaCfActivity extends AppCompatActivity {
 
         getData();
 
-        Button btn_lanjut = findViewById(R.id.btn_lanjut);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
-        btn_lanjut.setOnClickListener(view -> {
-            if (counter < list.size() - 1) {
-                // Pertanyaan belum mencapai akhir, lanjutkan pertanyaan berikutnya
-                String selectedValue = adapter.getSelectedAnswer(counter);
+        fab.setOnClickListener(view -> {
+            // Simpan semua jawaban dari adapter ke dalam ArrayList hasil
+            for (int i = 0; i < adapter.getItemCount(); i++) {
+                String selectedValue = adapter.getSelectedAnswer(i);
                 hasil.add(konversiJawaban(selectedValue));
-                counter++;
-                showPertanyaan(counter);
-            } else {
-                // Pertanyaan sudah mencapai akhir, tampilkan hasil
-                Intent intent = new Intent(getApplicationContext(), DiagnosaCfHasilActivity.class);
-                intent.putExtra("hasil", android.text.TextUtils.join("#", hasil));
-                startActivityForResult(intent, REQUEST_CODE);
             }
+
+            // Kirim hasil ke aktivitas berikutnya atau lakukan pengiriman data sesuai kebutuhan
+            Intent intent = new Intent(getApplicationContext(), DiagnosaCfHasilActivity.class);
+            intent.putExtra("hasil", android.text.TextUtils.join("#", hasil));
+            startActivityForResult(intent, REQUEST_CODE);
         });
 
     }
+
 
     private double konversiJawaban(String value) {
         if (value == null) {
@@ -108,16 +103,6 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         spinnerGejala.setSelection(0); // 0 corresponds to the index of "Pilih"
     }
 
-    private void showPertanyaan(int index) {
-        if (index >= list.size()) {
-            Intent intent = new Intent(getApplicationContext(), DiagnosaCfHasilActivity.class);
-            intent.putExtra("hasil", android.text.TextUtils.join("#", hasil));
-            startActivityForResult(intent, REQUEST_CODE);
-        } else {
-            HashMap<String, String> item = list.get(index);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -135,10 +120,10 @@ public class DiagnosaCfActivity extends AppCompatActivity {
         pDialog.show();
     }
 
-    private ArrayList<Gejala> convertToGejalaList(ArrayList<HashMap<String, String>> inputList) {
-        ArrayList<Gejala> gejalaList = new ArrayList<>();
+    private ArrayList<DiagnosaCFGejala> convertToGejalaList(ArrayList<HashMap<String, String>> inputList) {
+        ArrayList<DiagnosaCFGejala> gejalaList = new ArrayList<>();
         for (HashMap<String, String> gejalaData : inputList) {
-            Gejala gejala = new Gejala(
+            DiagnosaCFGejala gejala = new DiagnosaCFGejala(
                     gejalaData.get("kode_gejala"),
                     gejalaData.get("nama_gejala"),
                     gejalaData.get("selected_answer")
@@ -169,7 +154,7 @@ public class DiagnosaCfActivity extends AppCompatActivity {
                                 kosong = false;
                             }
 
-                            ArrayList<Gejala> gejalaList = convertToGejalaList(list);
+                            ArrayList<DiagnosaCFGejala> gejalaList = convertToGejalaList(list);
                             adapter = new DiagnosaCFAdapter(gejalaList, DiagnosaCfActivity.this);
                             recyclerView.setAdapter(adapter);
 
@@ -177,8 +162,6 @@ public class DiagnosaCfActivity extends AppCompatActivity {
                                 Toast.makeText(DiagnosaCfActivity.this, "Tidak ada data gejala", Toast.LENGTH_SHORT).show();
                             } else {
                                 hasil = new ArrayList<>();
-                                counter = 0;
-                                showPertanyaan(counter);
                             }
 
                         } else {

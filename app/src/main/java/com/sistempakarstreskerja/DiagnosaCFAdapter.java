@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class DiagnosaCFAdapter extends RecyclerView.Adapter<DiagnosaCFAdapter.ViewHolder> {
 
-    private ArrayList<Gejala> diagnosaList;
+    private ArrayList<DiagnosaCFGejala> diagnosaList;
     private Context context;
 
-    public DiagnosaCFAdapter(ArrayList<Gejala> diagnosaList, Context context) {
+    public DiagnosaCFAdapter(ArrayList<DiagnosaCFGejala> diagnosaList, Context context) {
         this.diagnosaList = diagnosaList;
         this.context = context;
     }
@@ -31,7 +31,7 @@ public class DiagnosaCFAdapter extends RecyclerView.Adapter<DiagnosaCFAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Gejala gejala = diagnosaList.get(position);
+        DiagnosaCFGejala gejala = diagnosaList.get(position);
         holder.tvKode.setText(gejala.getKodeGejala());
         holder.tvPertanyaan.setText(gejala.getKodeGejala() + " - " + "Apakah " + gejala.getNamaGejala().toLowerCase() + "?");
 
@@ -67,12 +67,12 @@ public class DiagnosaCFAdapter extends RecyclerView.Adapter<DiagnosaCFAdapter.Vi
         }
     }
 
-    public ArrayList<Gejala> getDiagnosaList() {
+    public ArrayList<DiagnosaCFGejala> getDiagnosaList() {
         return diagnosaList;
     }
 
     public String getSelectedAnswer(int position) {
-        Gejala gejala = diagnosaList.get(position);
+        DiagnosaCFGejala gejala = diagnosaList.get(position);
         return gejala.getSelectedAnswer();
     }
 }

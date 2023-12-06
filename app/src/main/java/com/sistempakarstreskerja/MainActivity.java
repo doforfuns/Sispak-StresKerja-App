@@ -3,6 +3,8 @@ package com.sistempakarstreskerja;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +23,22 @@ public class MainActivity extends AppCompatActivity {
 
         session = new SessionHandler(getApplicationContext());
 
-//        Button btn_diagnosa_forward = findViewById(R.id.btn_diagnosa_forward);
+    // Menyambut pengguna yang login
+        User user = session.getUserDetails();
+        String username = user.getNamaLengkap(); // Mengambil username dari session
+        String greetingMessage = "Halo " + username + "!\nSelamat Datang";
+// Pesan sapaan dengan baris baru setelah nama pengguna
+
+
+        // Mengubah teks pada TextView
+        TextView greetingTextView = findViewById(R.id.textView2);
+        greetingTextView.setText(greetingMessage);
+
+    // Menampilkan pesan sapaan pada saat pengguna berhasil login
+        //Toast.makeText(MainActivity.this, greetingMessage, Toast.LENGTH_LONG).show();
+
+
+    //        Button btn_diagnosa_forward = findViewById(R.id.btn_diagnosa_forward);
         Button btn_diagnosa_cf = findViewById(R.id.btn_diagnosa_cf);
         Button btn_riwayat = findViewById(R.id.btn_riwayat);
         Button btn_penyakit = findViewById(R.id.btn_penyakit);

@@ -22,6 +22,6 @@ public class SplashActivity extends AppCompatActivity {
             Intent i = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(i);
             finish();
-        }, 5000); // Mengatur waktu delay sebelum pindah ke LoginActivity
+        }, 2500); // Mengatur waktu delay sebelum pindah ke LoginActivity
     }
 }

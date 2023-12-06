@@ -39,17 +39,29 @@ if (isset($input['hasil']) && isset($input['id_pengguna'])) {
             $id_gejala = $rgejala['id_gejala'];
             $r_gejala = mysqli_fetch_array(mysqli_query($con, "SELECT nilai_cf FROM aturan WHERE id_gejala='$id_gejala' AND id_penyakit='$id_penyakit'"));
             $cf_gejala = $r_gejala['nilai_cf'];
+            $cf_condition = ''; // Variabel untuk menyimpan kondisi
+            
             foreach ($arr_hasil as $row) {
                 if ($id_gejala == $row['id_gejala']) {
                     $cf = $row['cf_user'] * $cf_gejala;
-                    if ($i >= 0) {
+            
+                    if ($cf < 0) {
+                        $cf_condition = 'minus';
+                    } elseif ($cf > 0) {
+                        $cf_condition = 'plus';
+                    }
+            
+                    if ($cf_condition == 'plus') {
                         $cf_gabungan = $cf_gabungan + ($cf * (1 - $cf_gabungan));
-                    } else {
-                        $cf_gabungan = $cf;
+                    } elseif ($cf_condition == 'minus') {
+                        $cf_gabungan = $cf_gabungan + ($cf * (1 + $cf_gabungan));
+                    } elseif ($cf_condition == 'plus_minus') {
+                        $cf_gabungan = ($cf_gabungan + $cf) / (1 - min(abs($cf_gabungan), abs($cf)));
                     }
                     $i++;
                 }
             }
+
         }
         $persentase = $cf_gabungan * 100;
         $hasil[$x]["id_penyakit"] = $id_penyakit;

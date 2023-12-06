@@ -137,8 +137,6 @@ public class DiagnosaCfHasilActivity extends AppCompatActivity {
         return hasilDiagnosisList;
     }
 
-
-
     private void showPopupHasilDiagnosa() {
         // Inflate layout untuk popup
         View popupView = getLayoutInflater().inflate(R.layout.popup_hasil_diagnosa, null);

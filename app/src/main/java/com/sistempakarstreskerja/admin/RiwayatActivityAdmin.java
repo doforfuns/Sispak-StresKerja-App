@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-//import com.sistempakarstreskerja.PenyakitDetailActivity;
+import com.sistempakarstreskerja.PenyakitDetailActivity;
 import com.sistempakarstreskerja.R;
 
 public class RiwayatActivityAdmin extends AppCompatActivity {
@@ -96,15 +96,15 @@ public class RiwayatActivityAdmin extends AppCompatActivity {
                             PenyakitRiwayatAdminAdapter adapter = new PenyakitRiwayatAdminAdapter(riwayatList);
                             recyclerView.setAdapter(adapter);
 
-//                            adapter.setOnItemClickListener((view, position) -> {
-//                                RiwayatItemAdmin riwayatItemAdmin = riwayatList.get(position);
-//                                String idPenyakit = riwayatItemAdmin.getIdPenyakit();
-//                                if (idPenyakit != null && !idPenyakit.isEmpty()) {
-//                                    Intent intent = new Intent(RiwayatActivityAdmin.this, PenyakitDetailActivity.class);
-//                                    intent.putExtra("id_penyakit", idPenyakit);
-//                                    startActivity(intent);
-//                                }
-//                            });
+                            adapter.setOnItemClickListener((view, position) -> {
+                                RiwayatItemAdmin riwayatItemAdmin = riwayatList.get(position);
+                                String idPenyakit = riwayatItemAdmin.getIdPenyakit();
+                                if (idPenyakit != null && !idPenyakit.isEmpty()) {
+                                    Intent intent = new Intent(RiwayatActivityAdmin.this, PenyakitDetailActivity.class);
+                                    intent.putExtra("id_penyakit", idPenyakit);
+                                    startActivity(intent);
+                                }
+                            });
                         } else {
                             recyclerView.setVisibility(View.GONE);
                             tv_tidak_ada.setVisibility(View.VISIBLE);

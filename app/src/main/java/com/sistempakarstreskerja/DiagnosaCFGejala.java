@@ -1,11 +1,11 @@
 package com.sistempakarstreskerja;
 
-public class Gejala {
+public class DiagnosaCFGejala {
     private String kodeGejala;
     private String namaGejala;
     private String selectedAnswer;
 
-    public Gejala(String kodeGejala, String namaGejala, String selectedAnswer) {
+    public DiagnosaCFGejala(String kodeGejala, String namaGejala, String selectedAnswer) {
         this.kodeGejala = kodeGejala;
         this.namaGejala = namaGejala;
         this.selectedAnswer = selectedAnswer;
@@ -15,16 +15,8 @@ public class Gejala {
         return kodeGejala;
     }
 
-    public void setKodeGejala(String kodeGejala) {
-        this.kodeGejala = kodeGejala;
-    }
-
     public String getNamaGejala() {
         return namaGejala;
-    }
-
-    public void setNamaGejala(String namaGejala) {
-        this.namaGejala = namaGejala;
     }
 
     public String getSelectedAnswer() {
